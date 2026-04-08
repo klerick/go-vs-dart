@@ -50,11 +50,13 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| bun-native | 6Mi | 85Mi | 14Mi | 14Mi | 84% | 0 |
-| bun-npm | 22Mi | 89Mi | 72Mi | 52Mi | 42% | 0 |
-| node | 18Mi | 39Mi | 21Mi | 22Mi | 44% | 0 |
+| bun-native | 6Mi | 85Mi | 14Mi | 14Mi | 90% | 0 |
+| bun-npm | 22Mi | 89Mi | 72Mi | 52Mi | 55% | 0 |
+| node | 18Mi | 39Mi | 21Mi | 22Mi | 81% | 0 |
 
 ---
 
@@ -106,11 +108,13 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| bun-native | 6Mi | 55Mi | 15Mi | 15Mi | 73% | 0 |
-| bun-npm | 22Mi | 86Mi | 69Mi | 47Mi | 45% | 0 |
-| node | 18Mi | 38Mi | 36Mi | 22Mi | 42% | 0 |
+| bun-native | 6Mi | 55Mi | 15Mi | 15Mi | 82% | 0 |
+| bun-npm | 22Mi | 86Mi | 69Mi | 47Mi | 61% | 0 |
+| node | 18Mi | 38Mi | 36Mi | 22Mi | 80% | 0 |
 
 ---
 
@@ -162,11 +166,13 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| bun-native | 6Mi | 40Mi | 6Mi | 6Mi | 85% | 1 |
-| bun-npm | 22Mi | 77Mi | 70Mi | 47Mi | 39% | 0 |
-| node | 18Mi | 37Mi | 20Mi | 21Mi | 43% | 0 |
+| bun-native | 6Mi | 40Mi | 6Mi | 6Mi | 100% | 1 |
+| bun-npm | 22Mi | 77Mi | 70Mi | 47Mi | 55% | 0 |
+| node | 18Mi | 37Mi | 20Mi | 21Mi | 84% | 0 |
 
 ---
 

@@ -50,11 +50,13 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| deno-native | 29Mi | 68Mi | 66Mi | 64Mi | 6% | 0 |
-| deno-npm | 28Mi | 88Mi | 70Mi | 71Mi | 19% | 0 |
-| node | 18Mi | 39Mi | 21Mi | 22Mi | 44% | 0 |
+| deno-native | 29Mi | 68Mi | 66Mi | 64Mi | 10% | 0 |
+| deno-npm | 28Mi | 88Mi | 70Mi | 71Mi | 28% | 0 |
+| node | 18Mi | 39Mi | 21Mi | 22Mi | 81% | 0 |
 
 ---
 
@@ -106,11 +108,13 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| deno-native | 29Mi | 67Mi | 66Mi | 52Mi | 22% | 0 |
-| deno-npm | 27Mi | 88Mi | 70Mi | 71Mi | 19% | 0 |
-| node | 18Mi | 38Mi | 36Mi | 22Mi | 42% | 0 |
+| deno-native | 29Mi | 67Mi | 66Mi | 52Mi | 39% | 0 |
+| deno-npm | 27Mi | 88Mi | 70Mi | 71Mi | 28% | 0 |
+| node | 18Mi | 38Mi | 36Mi | 22Mi | 80% | 0 |
 
 ---
 
@@ -162,11 +166,13 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
 | deno-native | 28Mi | 67Mi | 67Mi | 67Mi | 0% | 0 |
-| deno-npm | 28Mi | 84Mi | 71Mi | 72Mi | 14% | 0 |
-| node | 18Mi | 37Mi | 20Mi | 21Mi | 43% | 0 |
+| deno-npm | 28Mi | 84Mi | 71Mi | 72Mi | 21% | 0 |
+| node | 18Mi | 37Mi | 20Mi | 21Mi | 84% | 0 |
 
 ---
 

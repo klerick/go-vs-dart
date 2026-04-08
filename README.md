@@ -25,21 +25,23 @@ Full benchmark report: [REPORT.md](REPORT.md). Per-runtime summaries and pairwis
 
 ### TL;DR (median across 3 runs, 1000m CPU / 256Mi, 500 VUS)
 
-| Runtime | RPS | Idle | Peak | Recovery (5min) | Restarts |
-|---------|-----|------|------|-----------------|----------|
-| **Go** | 1656 | **1Mi** | **29Mi** | **8Mi (72%)** | 0 |
-| Bun (native) | **1769** | 6Mi | 85Mi | 14Mi (84%) | 0 |
-| Node.js | 1321 | 18Mi | 39Mi | 22Mi (44%) | 0 |
-| .NET 9 (Kestrel) | 1277 | 78Mi | 113Mi | 107Mi (5%) | 0 |
-| Bun (npm pg+redis) | 1419 | 22Mi | 89Mi | 49Mi (45%) | 0 |
-| Deno (npm pg+redis) | 1105 | 28Mi | 86Mi | 70Mi (19%) | 0 |
-| Deno (native deno-postgres+redis) | 1015 | 29Mi | 68Mi | 51Mi (25%) | 0 |
-| Dart (redis 3.1.0) | 741 | 3Mi | 39Mi | 37Mi (5%) | 0 |
-| Dart (ioredis port) | 792 | 3Mi | 39Mi | 37Mi (5%) | 0 |
-| NestJS + Fastify | 1198 | 28Mi | 47Mi | 28Mi (40%) | 0 |
-| NestJS + Express | 689 | 25Mi | 49Mi | 25Mi (49%) | 0 |
+| Runtime | RPS | Idle | Peak | After 5min | Returned | Restarts |
+|---------|-----|------|------|------------|----------|----------|
+| **Go** | 1656 | **1Mi** | **29Mi** | 8Mi | 75%* | 0 |
+| Bun (native) | **1769** | 6Mi | 85Mi | 14Mi | **90%** | 0 |
+| Node.js | 1321 | 18Mi | 39Mi | 22Mi | 81% | 0 |
+| .NET 9 (Kestrel) | 1277 | 78Mi | 113Mi | 107Mi | 17% | 0 |
+| Bun (npm pg+redis) | 1419 | 22Mi | 89Mi | 49Mi | 60% | 0 |
+| Deno (npm pg+redis) | 1105 | 28Mi | 86Mi | 70Mi | 28% | 0 |
+| Deno (native deno-postgres+redis) | 1015 | 29Mi | 68Mi | 51Mi | 44% | 0 |
+| Dart (redis 3.1.0) | 741 | 3Mi | 39Mi | 37Mi | **6%** | 0 |
+| Dart (ioredis port) | 792 | 3Mi | 39Mi | 37Mi | **6%** | 0 |
+| NestJS + Fastify | 1198 | 28Mi | 47Mi | 28Mi | **100%** | 0 |
+| NestJS + Express | 689 | 25Mi | 49Mi | 25Mi | **100%** | 0 |
 
-> "Recovery" = memory measured 5 minutes after the 500 VUS run finished. Percentage = portion of peak that was returned.
+> **Returned**: how much of the allocated memory above idle was released back to the OS within 5 minutes after the 500 VUS run. Formula: `(peak - after_5min) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+>
+> **\* Go**: scavenger releases pages gradually — within the 5-minute window memory drops `29Mi → 24Mi → 24Mi → 16Mi → 16Mi → 8Mi`, still trending down at the 5-minute mark. Given a longer window it returns fully to ~1Mi idle. Our benchmark cap is 5 minutes, same for everyone.
 >
 > On `100m` CPU + 500 VUS (deliberate stress test): **Bun native** and **NestJS** (both adapters) are killed by kubelet via liveness probe. Go, Node.js, Dart all stable. See [REPORT.md](REPORT.md) for details.
 

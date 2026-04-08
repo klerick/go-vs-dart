@@ -217,6 +217,7 @@ with open(out_file, 'w') as f:
 
         # Idle + Recovery
         f.write("\n### Memory: idle / peak / recovery (500 VUS)\n\n")
+        f.write("> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.\n\n")
         f.write("| Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |\n")
         f.write("|---------|------|------|-----------|------------|----------|----------|\n")
         for svc in services:
@@ -228,9 +229,14 @@ with open(out_file, 'w') as f:
             after_300 = rec.get('mem_300s')
             restarts = rec.get('restarts', 0)
             returned = ''
-            if peak and after_300:
-                pct = round((peak - after_300) / peak * 100)
-                returned = f"{pct}%"
+            if peak is not None and after_300 is not None and idle is not None:
+                allocated = peak - idle
+                if allocated > 0:
+                    released = peak - after_300
+                    pct = round(released / allocated * 100)
+                    returned = f"{pct}%"
+                else:
+                    returned = "-"
             f.write(f"| {svc} | {idle or '-'}Mi | {peak or '-'}Mi | {after_60 or '-'}Mi | {after_300 or '-'}Mi | {returned or '-'} | {restarts} |\n")
 
         f.write("\n---\n\n")

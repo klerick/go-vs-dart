@@ -50,11 +50,13 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| go | 1Mi | 29Mi | 24Mi | 8Mi | 72% | 0 |
-| node | 18Mi | 39Mi | 21Mi | 22Mi | 44% | 0 |
-| dart-redis310 | 3Mi | 39Mi | 37Mi | 37Mi | 5% | 0 |
+| go | 1Mi | 29Mi | 24Mi | 8Mi | 75% | 0 |
+| node | 18Mi | 39Mi | 21Mi | 22Mi | 81% | 0 |
+| dart-redis310 | 3Mi | 39Mi | 37Mi | 37Mi | 6% | 0 |
 
 ---
 
@@ -106,11 +108,13 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| go | 1Mi | 29Mi | 23Mi | 8Mi | 72% | 0 |
-| node | 18Mi | 38Mi | 36Mi | 22Mi | 42% | 0 |
-| dart-redis310 | 3Mi | 48Mi | 44Mi | 44Mi | 8% | 0 |
+| go | 1Mi | 29Mi | 23Mi | 8Mi | 75% | 0 |
+| node | 18Mi | 38Mi | 36Mi | 22Mi | 80% | 0 |
+| dart-redis310 | 3Mi | 48Mi | 44Mi | 44Mi | 9% | 0 |
 
 ---
 
@@ -162,11 +166,13 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| go | 1Mi | 28Mi | 25Mi | 9Mi | 68% | 0 |
-| node | 18Mi | 37Mi | 20Mi | 21Mi | 43% | 0 |
-| dart-redis310 | 3Mi | 47Mi | 45Mi | 45Mi | 4% | 0 |
+| go | 1Mi | 28Mi | 25Mi | 9Mi | 70% | 0 |
+| node | 18Mi | 37Mi | 20Mi | 21Mi | 84% | 0 |
+| dart-redis310 | 3Mi | 47Mi | 45Mi | 45Mi | 5% | 0 |
 
 ---
 

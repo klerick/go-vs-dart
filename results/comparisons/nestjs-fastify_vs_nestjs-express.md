@@ -49,10 +49,12 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| nestjs-fastify | 26Mi | 47Mi | 28Mi | 29Mi | 38% | 0 |
-| nestjs-express | 25Mi | 49Mi | 28Mi | 30Mi | 39% | 0 |
+| nestjs-fastify | 26Mi | 47Mi | 28Mi | 29Mi | 86% | 0 |
+| nestjs-express | 25Mi | 49Mi | 28Mi | 30Mi | 79% | 0 |
 
 ---
 
@@ -103,10 +105,12 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| nestjs-fastify | 26Mi | 45Mi | 28Mi | 29Mi | 36% | 0 |
-| nestjs-express | 25Mi | 47Mi | 28Mi | 30Mi | 36% | 0 |
+| nestjs-fastify | 26Mi | 45Mi | 28Mi | 29Mi | 84% | 0 |
+| nestjs-express | 25Mi | 47Mi | 28Mi | 30Mi | 77% | 0 |
 
 ---
 
@@ -157,10 +161,12 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| nestjs-fastify | 26Mi | 42Mi | 30Mi | 27Mi | 36% | 3 |
-| nestjs-express | 25Mi | 43Mi | 28Mi | 27Mi | 37% | 3 |
+| nestjs-fastify | 26Mi | 42Mi | 30Mi | 27Mi | 94% | 3 |
+| nestjs-express | 25Mi | 43Mi | 28Mi | 27Mi | 89% | 3 |
 
 ---
 

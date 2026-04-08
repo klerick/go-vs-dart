@@ -49,10 +49,12 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| dart-redis310 | 3Mi | 39Mi | 37Mi | 37Mi | 5% | 0 |
-| dart-ioredis | 3Mi | 39Mi | 37Mi | 37Mi | 5% | 0 |
+| dart-redis310 | 3Mi | 39Mi | 37Mi | 37Mi | 6% | 0 |
+| dart-ioredis | 3Mi | 39Mi | 37Mi | 37Mi | 6% | 0 |
 
 ---
 
@@ -103,9 +105,11 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| dart-redis310 | 3Mi | 48Mi | 44Mi | 44Mi | 8% | 0 |
+| dart-redis310 | 3Mi | 48Mi | 44Mi | 44Mi | 9% | 0 |
 | dart-ioredis | 3Mi | 46Mi | 42Mi | 42Mi | 9% | 0 |
 
 ---
@@ -157,10 +161,12 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| dart-redis310 | 3Mi | 47Mi | 45Mi | 45Mi | 4% | 0 |
-| dart-ioredis | 3Mi | 47Mi | 44Mi | 44Mi | 6% | 0 |
+| dart-redis310 | 3Mi | 47Mi | 45Mi | 45Mi | 5% | 0 |
+| dart-ioredis | 3Mi | 47Mi | 44Mi | 44Mi | 7% | 0 |
 
 ---
 

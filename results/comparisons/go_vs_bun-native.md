@@ -49,10 +49,12 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| go | 1Mi | 29Mi | 24Mi | 8Mi | 72% | 0 |
-| bun-native | 6Mi | 85Mi | 14Mi | 14Mi | 84% | 0 |
+| go | 1Mi | 29Mi | 24Mi | 8Mi | 75% | 0 |
+| bun-native | 6Mi | 85Mi | 14Mi | 14Mi | 90% | 0 |
 
 ---
 
@@ -103,10 +105,12 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| go | 1Mi | 29Mi | 23Mi | 8Mi | 72% | 0 |
-| bun-native | 6Mi | 55Mi | 15Mi | 15Mi | 73% | 0 |
+| go | 1Mi | 29Mi | 23Mi | 8Mi | 75% | 0 |
+| bun-native | 6Mi | 55Mi | 15Mi | 15Mi | 82% | 0 |
 
 ---
 
@@ -157,10 +161,12 @@
 
 ### Memory: idle / peak / recovery (500 VUS)
 
+> **Returned**: how much of the allocated memory above idle was released back. Formula: `(peak - after_300s) / (peak - idle)`. 100% = back to baseline, 0% = nothing released.
+
 | Service | Idle | Peak | After 60s | After 300s | Returned | Restarts |
 |---------|------|------|-----------|------------|----------|----------|
-| go | 1Mi | 28Mi | 25Mi | 9Mi | 68% | 0 |
-| bun-native | 6Mi | 40Mi | 6Mi | 6Mi | 85% | 1 |
+| go | 1Mi | 28Mi | 25Mi | 9Mi | 70% | 0 |
+| bun-native | 6Mi | 40Mi | 6Mi | 6Mi | 100% | 1 |
 
 ---
 
