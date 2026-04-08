@@ -67,12 +67,9 @@ export REGISTRY=your-registry.example.com/library
 # All services
 for svc in go-service dart-service node-service bun-service deno-service dotnet-service nestjs-service; do
   docker buildx build --platform linux/arm64 \
-    -t $REGISTRY/${svc%-service}-bench:latest \
+    -t $REGISTRY/${svc%-service}-bench:v1 \
     --push $svc/
 done
-
-# Or use the script (builds Go and Dart only)
-./scripts/build-push.sh
 ```
 
 ### 3. Deploy infrastructure
@@ -100,7 +97,7 @@ kubectl apply -f k8s/go-service.yaml
 kubectl -n bench rollout status deployment/go-service --timeout=120s
 ```
 
-### 5. Run benchmark
+### 5. Run a single benchmark manually
 
 ```bash
 # Port forward
@@ -110,13 +107,49 @@ kubectl -n bench port-forward svc/go-service 9090:8080 &
 k6 run -e BASE_URL=http://localhost:9090 -e VUS=100 bench/k6-bench.js
 ```
 
-### 6. Reset data between runs
+### 6. Run the full automated benchmark for a service
+
+This is what produces the data in `results/benchmarks/`:
+
+```bash
+# ./scripts/bench-one.sh <service-name> <image-tag> <results-dir> <cpu-limit>
+# Runs 3 iterations of 10/50/100/500 VUS, plus 5min recovery measurement.
+# Takes ~30 minutes per profile.
+
+./scripts/bench-one.sh go-service     go-bench:v1     results/benchmarks/go     1000m
+./scripts/bench-one.sh go-service     go-bench:v1     results/benchmarks/go     250m
+./scripts/bench-one.sh go-service     go-bench:v1     results/benchmarks/go     100m
+```
+
+Each profile creates a subdirectory under `results/benchmarks/<service>/<cpu>/` with raw k6 JSON, logs, and aggregated `summary.csv` + `recovery.csv`.
+
+### 7. Generate per-service summary (median across runs)
+
+```bash
+# ./scripts/generate-summary.sh <service-name>
+./scripts/generate-summary.sh go
+# Output: results/benchmarks/go/summary.md
+```
+
+### 8. Generate comparison reports
+
+```bash
+# ./scripts/generate-comparison.sh <svc1>_vs_<svc2>[_vs_<svc3>...]
+./scripts/generate-comparison.sh go_vs_node_vs_dart-redis310
+./scripts/generate-comparison.sh go_vs_bun-native
+./scripts/generate-comparison.sh nestjs-fastify_vs_nestjs-express
+# Output: results/comparisons/<name>.md
+```
+
+### 9. Reset data between manual runs
 
 ```bash
 kubectl -n bench delete job reset-data --ignore-not-found
 kubectl apply -f k8s/reset-job.yaml
 kubectl -n bench wait --for=condition=complete job/reset-data --timeout=120s
 ```
+
+> The automated `bench-one.sh` does this reset between every VUS level — no need to call it manually unless you're running k6 by hand.
 
 ## Project Structure
 
