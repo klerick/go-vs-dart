@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nestjs-service
+  namespace: bench
+spec:
+  selector:
+    app: nestjs-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nestjs-service
+  namespace: bench
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nestjs-service
+  template:
+    metadata:
+      labels:
+        app: nestjs-service
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: your-app-node
+      containers:
+        - name: nestjs-service
+          image: your-registry.example.com/library/nestjs-bench:latest
+          env:
+            - name: HTTP_PORT
+              value: "8080"
+            - name: POSTGRES_URL
+              value: "postgres://bench:bench@postgres:5432/bench?sslmode=disable"
+            - name: REDIS_URL
+              value: "redis://redis:6379"
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "1000m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10

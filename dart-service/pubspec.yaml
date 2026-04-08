@@ -1,0 +1,10 @@
+name: dart_service
+description: Bare-bones Dart HTTP service for Go vs Dart benchmark.
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  postgres: ^3.5.5
+  ioredis:
+    path: ./ioredis

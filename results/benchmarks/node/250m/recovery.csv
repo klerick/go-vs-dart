@@ -1,0 +1,4 @@
+run,mem_after_500vus,mem_60s,mem_120s,mem_180s,mem_240s,mem_300s,restarts
+1,38Mi,36Mi,20Mi,21Mi,21Mi,21Mi,0
+2,38Mi,36Mi,21Mi,21Mi,21Mi,22Mi,0
+3,38Mi,36Mi,21Mi,21Mi,21Mi,22Mi,0

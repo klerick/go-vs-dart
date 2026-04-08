@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "iterations": {
+            "count": 12633,
+            "rate": 252.7345516380422
+        },
+        "http_req_duration{expected_response:true}": {
+            "med": 1800.197,
+            "max": 3408.837,
+            "p(90)": 2394.4494,
+            "p(95)": 2409.5958,
+            "avg": 1603.9973002453944,
+            "min": 2.576
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_waiting": {
+            "min": 2.564,
+            "med": 1800.14,
+            "max": 3408.682,
+            "p(90)": 2394.3784,
+            "p(95)": 2409.437,
+            "avg": 1603.91390073616
+        },
+        "iteration_duration": {
+            "p(95)": 2411.3960168000003,
+            "avg": 1605.358203327395,
+            "min": 2.610125,
+            "med": 1800.599958,
+            "max": 3414.026542,
+            "p(90)": 2396.1605002
+        },
+        "http_req_sending": {
+            "avg": 0.02232731734346432,
+            "min": 0.002,
+            "med": 0.013,
+            "max": 3.573,
+            "p(90)": 0.032,
+            "p(95)": 0.064
+        },
+        "http_req_duration": {
+            "p(95)": 2409.5958,
+            "avg": 1603.9973002453944,
+            "min": 2.576,
+            "med": 1800.197,
+            "max": 3408.837,
+            "p(90)": 2394.4494
+        },
+        "http_req_blocked": {
+            "p(90)": 0.008,
+            "p(95)": 0.027,
+            "avg": 0.03106079316076707,
+            "min": 0,
+            "med": 0.003,
+            "max": 5.878
+        },
+        "checks": {
+            "passes": 12633,
+            "fails": 0,
+            "value": 1
+        },
+        "data_received": {
+            "count": 13776209,
+            "rate": 275605.4781039311
+        },
+        "http_reqs": {
+            "count": 12633,
+            "rate": 252.7345516380422
+        },
+        "http_req_connecting": {
+            "avg": 0.020625346315206187,
+            "min": 0,
+            "med": 0,
+            "max": 5.713,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_receiving": {
+            "avg": 0.06107219187841327,
+            "min": 0.008,
+            "med": 0.044,
+            "max": 3.293,
+            "p(90)": 0.1,
+            "p(95)": 0.13939999999999944
+        },
+        "vus": {
+            "value": 3,
+            "min": 3,
+            "max": 500
+        },
+        "success_total": {
+            "count": 12633,
+            "rate": 252.7345516380422
+        },
+        "vus_max": {
+            "max": 500,
+            "value": 500,
+            "min": 500
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 12633,
+            "value": 0
+        },
+        "data_sent": {
+            "count": 1316958,
+            "rate": 26346.931817947658
+        }
+    },
+    "root_group": {
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 6315,
+                    "fails": 0
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 2553,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 3765,
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200"
+                }
+            },
+        "name": ""
+    }
+}

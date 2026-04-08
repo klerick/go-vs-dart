@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "checks": {
+            "passes": 26466,
+            "fails": 0,
+            "value": 1
+        },
+        "vus": {
+            "value": 1,
+            "min": 0,
+            "max": 10
+        },
+        "http_req_sending": {
+            "max": 6.476,
+            "p(90)": 0.023,
+            "p(95)": 0.034,
+            "avg": 0.017761278621626308,
+            "min": 0.001,
+            "med": 0.01
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(90)": 68.27250000000001,
+            "p(95)": 73.56875,
+            "avg": 14.947759805032904,
+            "min": 1.654,
+            "med": 5.238,
+            "max": 88.209
+        },
+        "data_sent": {
+            "count": 2754202,
+            "rate": 55081.282630991496
+        },
+        "data_received": {
+            "rate": 534191.7783595753,
+            "count": 26710926
+        },
+        "http_req_connecting": {
+            "min": 0,
+            "med": 0,
+            "max": 3.896,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.00042012393259276056
+        },
+        "vus_max": {
+            "value": 10,
+            "min": 10,
+            "max": 10
+        },
+        "http_reqs": {
+            "count": 26466,
+            "rate": 529.2935035672115
+        },
+        "http_req_blocked": {
+            "avg": 0.0054710572054706055,
+            "min": 0,
+            "med": 0.003,
+            "max": 5.388,
+            "p(90)": 0.006,
+            "p(95)": 0.008
+        },
+        "http_req_waiting": {
+            "p(95)": 73.49,
+            "avg": 14.875177964180498,
+            "min": 1.627,
+            "med": 5.168,
+            "max": 88.155,
+            "p(90)": 68.156
+        },
+        "http_req_failed": {
+            "fails": 26466,
+            "passes": 0,
+            "value": 0
+        },
+        "success_total": {
+            "count": 26466,
+            "rate": 529.2935035672115
+        },
+        "iteration_duration": {
+            "p(95)": 73.766667,
+            "avg": 15.106211038086618,
+            "min": 1.734625,
+            "med": 5.384729500000001,
+            "max": 88.292125,
+            "p(90)": 68.464167
+        },
+        "http_req_tls_handshaking": {
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0
+        },
+        "iterations": {
+            "count": 26466,
+            "rate": 529.2935035672115
+        },
+        "http_req_duration": {
+            "min": 1.654,
+            "med": 5.238,
+            "max": 88.209,
+            "p(90)": 68.27250000000001,
+            "p(95)": 73.56875,
+            "avg": 14.947759805032904
+        },
+        "http_req_receiving": {
+            "avg": 0.05482056223078526,
+            "min": 0.005,
+            "med": 0.033,
+            "max": 8.211,
+            "p(90)": 0.083,
+            "p(95)": 0.126
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 13277,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 7897,
+                    "fails": 0
+                },
+                "POST /orders 201": {
+                    "fails": 0,
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 5292
+                }
+            }
+    }
+}

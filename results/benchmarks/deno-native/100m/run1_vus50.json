@@ -1,0 +1,145 @@
+{
+    "root_group": {
+        "checks": {
+            "GET /orders?user_id 200": {
+                "fails": 0,
+                "name": "GET /orders?user_id 200",
+                "path": "::GET /orders?user_id 200",
+                "id": "ab0b46c92b84870e38e5a604ac36187b",
+                "passes": 1342
+            },
+            "GET /orders/:id 200": {
+                "passes": 2381,
+                "fails": 0,
+                "name": "GET /orders/:id 200",
+                "path": "::GET /orders/:id 200",
+                "id": "ca384c3a859ffb946ea1d7d59aff1eec"
+            },
+            "POST /orders 201": {
+                "name": "POST /orders 201",
+                "path": "::POST /orders 201",
+                "id": "4b499a5302314fdd343249234e5fd479",
+                "passes": 955,
+                "fails": 0
+            }
+        },
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {}
+    },
+    "metrics": {
+        "data_sent": {
+            "count": 487758,
+            "rate": 9752.056115579533
+        },
+        "http_req_connecting": {
+            "avg": 0.003488456605386918,
+            "min": 0,
+            "med": 0,
+            "max": 0.649,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "iterations": {
+            "count": 4678,
+            "rate": 93.53023119801429
+        },
+        "success_total": {
+            "rate": 93.53023119801429,
+            "count": 4678
+        },
+        "iteration_duration": {
+            "p(90)": 603.530925,
+            "p(95)": 700.3417688,
+            "avg": 428.64111769409953,
+            "min": 2.779375,
+            "med": 494.46585400000004,
+            "max": 1195.655709
+        },
+        "http_req_waiting": {
+            "min": 2.634,
+            "med": 494.198,
+            "max": 1195.352,
+            "p(90)": 603.3733,
+            "p(95)": 700.09195,
+            "avg": 428.39793052586595
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 4678,
+            "value": 0
+        },
+        "data_received": {
+            "count": 4772275,
+            "rate": 95415.13127201874
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 50
+        },
+        "http_req_duration": {
+            "avg": 428.4744555365536,
+            "min": 2.683,
+            "med": 494.29650000000004,
+            "max": 1195.455,
+            "p(90)": 603.4171,
+            "p(95)": 700.1410999999999
+        },
+        "http_req_sending": {
+            "p(95)": 0.036,
+            "avg": 0.018191534843950724,
+            "min": 0.002,
+            "med": 0.013,
+            "max": 2.405,
+            "p(90)": 0.028
+        },
+        "http_req_receiving": {
+            "min": 0.007,
+            "med": 0.044,
+            "max": 1.067,
+            "p(90)": 0.1023000000000001,
+            "p(95)": 0.14,
+            "avg": 0.058333475844377904
+        },
+        "checks": {
+            "passes": 4678,
+            "fails": 0,
+            "value": 1
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_reqs": {
+            "count": 4678,
+            "rate": 93.53023119801429
+        },
+        "vus_max": {
+            "value": 50,
+            "min": 50,
+            "max": 50
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 428.4744555365536,
+            "min": 2.683,
+            "med": 494.29650000000004,
+            "max": 1195.455,
+            "p(90)": 603.4171,
+            "p(95)": 700.1410999999999
+        },
+        "http_req_blocked": {
+            "avg": 0.009838178708850086,
+            "min": 0,
+            "med": 0.004,
+            "max": 3.101,
+            "p(90)": 0.007300000000000104,
+            "p(95)": 0.01
+        }
+    }
+}

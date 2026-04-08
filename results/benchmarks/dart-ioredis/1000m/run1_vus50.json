@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 42521,
+            "value": 0
+        },
+        "checks": {
+            "passes": 42521,
+            "fails": 0,
+            "value": 1
+        },
+        "http_req_duration{expected_response:true}": {
+            "max": 123.816,
+            "p(90)": 74.33,
+            "p(95)": 78.354,
+            "avg": 46.91025690835138,
+            "min": 3.721,
+            "med": 49.574
+        },
+        "http_req_duration": {
+            "min": 3.721,
+            "med": 49.574,
+            "max": 123.816,
+            "p(90)": 74.33,
+            "p(95)": 78.354,
+            "avg": 46.91025690835138
+        },
+        "http_req_connecting": {
+            "avg": 0.0004445332894334564,
+            "min": 0,
+            "med": 0,
+            "max": 1.209,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "data_sent": {
+            "count": 4432369,
+            "rate": 88641.94447596474
+        },
+        "http_req_sending": {
+            "p(95)": 0.027,
+            "avg": 0.014644716728203278,
+            "min": 0.001,
+            "med": 0.011,
+            "max": 3.734,
+            "p(90)": 0.021
+        },
+        "success_total": {
+            "count": 42521,
+            "rate": 850.3678554431043
+        },
+        "http_req_waiting": {
+            "avg": 46.80309218974193,
+            "min": 3.664,
+            "med": 49.498,
+            "max": 123.698,
+            "p(90)": 74.217,
+            "p(95)": 78.249
+        },
+        "http_req_receiving": {
+            "avg": 0.09252000188142182,
+            "min": 0.005,
+            "med": 0.046,
+            "max": 15.279,
+            "p(90)": 0.173,
+            "p(95)": 0.253
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "data_received": {
+            "count": 48152495,
+            "rate": 962990.8494011147
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 50
+        },
+        "http_reqs": {
+            "rate": 850.3678554431043,
+            "count": 42521
+        },
+        "iterations": {
+            "count": 42521,
+            "rate": 850.3678554431043
+        },
+        "vus_max": {
+            "min": 50,
+            "max": 50,
+            "value": 50
+        },
+        "iteration_duration": {
+            "avg": 47.041478572610984,
+            "min": 3.833833,
+            "med": 49.727917,
+            "max": 123.962917,
+            "p(90)": 74.480583,
+            "p(95)": 78.497459
+        },
+        "http_req_blocked": {
+            "max": 3.672,
+            "p(90)": 0.005,
+            "p(95)": 0.007,
+            "avg": 0.0043463935467174105,
+            "min": 0,
+            "med": 0.003
+        }
+    },
+    "root_group": {
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 21366,
+                    "fails": 0
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 8608,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 12547,
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200"
+                }
+            },
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e"
+    }
+}

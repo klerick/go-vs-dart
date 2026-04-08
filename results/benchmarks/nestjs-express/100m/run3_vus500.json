@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_waiting": {
+            "p(90)": 14007.451900000005,
+            "p(95)": 28584.591449999996,
+            "avg": 6507.680899939537,
+            "min": 3.699,
+            "med": 4205.1925,
+            "max": 40106.27
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 3308,
+            "value": 0
+        },
+        "data_received": {
+            "count": 3930744,
+            "rate": 77508.194743001
+        },
+        "iterations": {
+            "count": 3308,
+            "rate": 65.22864582629836
+        },
+        "http_reqs": {
+            "count": 3308,
+            "rate": 65.22864582629836
+        },
+        "http_req_sending": {
+            "p(90)": 0.085,
+            "p(95)": 0.124,
+            "avg": 0.0362224909310765,
+            "min": 0.003,
+            "med": 0.02,
+            "max": 2.138
+        },
+        "data_sent": {
+            "count": 345611,
+            "rate": 6814.914604798309
+        },
+        "vus_max": {
+            "value": 500,
+            "min": 500,
+            "max": 500
+        },
+        "success_total": {
+            "count": 3308,
+            "rate": 65.22864582629836
+        },
+        "iteration_duration": {
+            "max": 40106.871792,
+            "p(90)": 14008.484324900006,
+            "p(95)": 28585.169514699995,
+            "avg": 6508.114969659018,
+            "min": 3.792916,
+            "med": 4205.432791499999
+        },
+        "http_req_blocked": {
+            "max": 8.836,
+            "p(90)": 0.413,
+            "p(95)": 0.6276499999999998,
+            "avg": 0.09101178960096504,
+            "min": 0,
+            "med": 0.006
+        },
+        "http_req_receiving": {
+            "med": 0.066,
+            "max": 3.155,
+            "p(90)": 0.1713000000000001,
+            "p(95)": 0.21764999999999984,
+            "avg": 0.09231499395405068,
+            "min": 0.01
+        },
+        "http_req_duration{expected_response:true}": {
+            "med": 4205.2785,
+            "max": 40106.423,
+            "p(90)": 14007.605700000004,
+            "p(95)": 28584.73565,
+            "avg": 6507.8094374244165,
+            "min": 3.734
+        },
+        "http_req_connecting": {
+            "avg": 0.06718954050785973,
+            "min": 0,
+            "med": 0,
+            "max": 8.711,
+            "p(90)": 0.32060000000000016,
+            "p(95)": 0.48964999999999986
+        },
+        "vus": {
+            "min": 48,
+            "max": 500,
+            "value": 123
+        },
+        "http_req_duration": {
+            "p(90)": 14007.605700000004,
+            "p(95)": 28584.73565,
+            "avg": 6507.8094374244165,
+            "min": 3.734,
+            "med": 4205.2785,
+            "max": 40106.423
+        },
+        "checks": {
+            "passes": 3308,
+            "fails": 0,
+            "value": 1
+        }
+    },
+    "root_group": {
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "POST /orders 201": {
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 670,
+                    "fails": 0,
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201"
+                },
+                "GET /orders/:id 200": {
+                    "passes": 1608,
+                    "fails": 0,
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec"
+                },
+                "GET /orders?user_id 200": {
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 1030
+                }
+            },
+        "name": "",
+        "path": ""
+    }
+}

@@ -1,0 +1,8 @@
+FROM denoland/deno:latest
+
+WORKDIR /app
+COPY server-native.mjs ./server.mjs
+RUN deno install --entrypoint server.mjs
+
+USER deno
+ENTRYPOINT ["deno", "run", "--allow-net", "--allow-env", "--allow-read", "--allow-sys", "server.mjs"]

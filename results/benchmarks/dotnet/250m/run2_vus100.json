@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "http_req_tls_handshaking": {
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0
+        },
+        "http_req_blocked": {
+            "med": 0.003,
+            "max": 3.259,
+            "p(90)": 0.007,
+            "p(95)": 0.01,
+            "avg": 0.00795418721716467,
+            "min": 0
+        },
+        "checks": {
+            "passes": 19667,
+            "fails": 0,
+            "value": 1
+        },
+        "http_req_receiving": {
+            "avg": 0.061591650988964734,
+            "min": 0.006,
+            "med": 0.038,
+            "max": 6.827,
+            "p(90)": 0.102,
+            "p(95)": 0.15
+        },
+        "data_sent": {
+            "rate": 40863.53369225402,
+            "count": 2043909
+        },
+        "iteration_duration": {
+            "med": 203.69225,
+            "max": 402.07625,
+            "p(90)": 296.6300746,
+            "p(95)": 301.43598749999995,
+            "avg": 203.60551150643172,
+            "min": 2.46475
+        },
+        "http_req_sending": {
+            "p(95)": 0.04,
+            "avg": 0.01898052575379955,
+            "min": 0.001,
+            "med": 0.011,
+            "max": 13.105,
+            "p(90)": 0.027
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 100
+        },
+        "http_req_connecting": {
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.002203233843494179,
+            "min": 0,
+            "med": 0,
+            "max": 1.612
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(90)": 296.4322,
+            "p(95)": 301.1997,
+            "avg": 203.42093018762597,
+            "min": 2.396,
+            "med": 203.54,
+            "max": 401.894
+        },
+        "data_received": {
+            "count": 21874713,
+            "rate": 437337.5094898486
+        },
+        "http_req_waiting": {
+            "med": 203.471,
+            "max": 401.819,
+            "p(90)": 296.3394,
+            "p(95)": 301.1368,
+            "avg": 203.34035801088257,
+            "min": 2.355
+        },
+        "iterations": {
+            "count": 19667,
+            "rate": 393.19906958947774
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 19667,
+            "value": 0
+        },
+        "http_reqs": {
+            "count": 19667,
+            "rate": 393.19906958947774
+        },
+        "http_req_duration": {
+            "avg": 203.42093018762597,
+            "min": 2.396,
+            "med": 203.54,
+            "max": 401.894,
+            "p(90)": 296.4322,
+            "p(95)": 301.1997
+        },
+        "success_total": {
+            "count": 19667,
+            "rate": 393.19906958947774
+        },
+        "vus_max": {
+            "value": 100,
+            "min": 100,
+            "max": 100
+        }
+    },
+    "root_group": {
+        "groups": {},
+        "checks": {
+                "POST /orders 201": {
+                    "fails": 0,
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 3894
+                },
+                "GET /orders/:id 200": {
+                    "passes": 9856,
+                    "fails": 0,
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec"
+                },
+                "GET /orders?user_id 200": {
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 5917,
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200"
+                }
+            },
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e"
+    }
+}

@@ -1,0 +1,145 @@
+{
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 968,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 577
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 393,
+                    "fails": 0
+                }
+            }
+    },
+    "metrics": {
+        "data_received": {
+            "count": 2233307,
+            "rate": 44628.36209148956
+        },
+        "data_sent": {
+            "count": 202144,
+            "rate": 4039.460596604974
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "success_total": {
+            "count": 1938,
+            "rate": 38.727217410462046
+        },
+        "iterations": {
+            "count": 1938,
+            "rate": 38.727217410462046
+        },
+        "vus_max": {
+            "min": 10,
+            "max": 10,
+            "value": 10
+        },
+        "iteration_duration": {
+            "p(95)": 496.2325232,
+            "avg": 206.86844362693478,
+            "min": 3.970375,
+            "med": 196.187229,
+            "max": 1495.929791,
+            "p(90)": 362.4831377
+        },
+        "http_req_connecting": {
+            "min": 0,
+            "med": 0,
+            "max": 1.543,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.0032249742002063977
+        },
+        "http_req_receiving": {
+            "max": 0.789,
+            "p(90)": 0.193,
+            "p(95)": 0.22114999999999993,
+            "avg": 0.10069556243550054,
+            "min": 0.013,
+            "med": 0.08
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 1938,
+            "value": 0
+        },
+        "http_reqs": {
+            "count": 1938,
+            "rate": 38.727217410462046
+        },
+        "http_req_duration{expected_response:true}": {
+            "max": 1495.413,
+            "p(90)": 362.23359999999997,
+            "p(95)": 496.0236,
+            "avg": 206.62020278637792,
+            "min": 3.667,
+            "med": 195.94299999999998
+        },
+        "http_req_sending": {
+            "p(95)": 0.053,
+            "avg": 0.02702425180598562,
+            "min": 0.003,
+            "med": 0.022,
+            "max": 0.456,
+            "p(90)": 0.043
+        },
+        "http_req_waiting": {
+            "avg": 206.4924829721366,
+            "min": 3.537,
+            "med": 195.7695,
+            "max": 1495.24,
+            "p(90)": 362.0414,
+            "p(95)": 495.89905
+        },
+        "vus": {
+            "max": 10,
+            "value": 1,
+            "min": 0
+        },
+        "http_req_blocked": {
+            "min": 0.001,
+            "med": 0.006,
+            "max": 1.692,
+            "p(90)": 0.012,
+            "p(95)": 0.013,
+            "avg": 0.012139834881321051
+        },
+        "checks": {
+            "passes": 1938,
+            "fails": 0,
+            "value": 1
+        },
+        "http_req_duration": {
+            "max": 1495.413,
+            "p(90)": 362.23359999999997,
+            "p(95)": 496.0236,
+            "avg": 206.62020278637792,
+            "min": 3.667,
+            "med": 195.94299999999998
+        }
+    }
+}

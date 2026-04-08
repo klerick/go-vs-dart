@@ -1,0 +1,6 @@
+FROM oven/bun:1-alpine
+
+WORKDIR /app
+COPY server-native.mjs ./server.mjs
+USER bun
+ENTRYPOINT ["bun", "run", "server.mjs"]

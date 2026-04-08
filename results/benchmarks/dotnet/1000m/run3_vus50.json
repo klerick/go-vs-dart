@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "iterations": {
+            "count": 63452,
+            "rate": 1268.9608676002965
+        },
+        "http_req_waiting": {
+            "med": 25.331,
+            "max": 98.005,
+            "p(90)": 63.8329,
+            "p(95)": 68.74244999999999,
+            "avg": 31.246974941688293,
+            "min": 1.981
+        },
+        "http_req_duration": {
+            "max": 98.053,
+            "p(90)": 63.915,
+            "p(95)": 68.842,
+            "avg": 31.33015783584482,
+            "min": 2.012,
+            "med": 25.4135
+        },
+        "http_req_connecting": {
+            "min": 0,
+            "med": 0,
+            "max": 9.718,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.0009908749921200275
+        },
+        "http_req_tls_handshaking": {
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0
+        },
+        "iteration_duration": {
+            "p(95)": 69.03347674999999,
+            "avg": 31.505059905346062,
+            "min": 2.081042,
+            "med": 25.5836255,
+            "max": 98.2175,
+            "p(90)": 64.0759423
+        },
+        "data_received": {
+            "rate": 1419427.9444733826,
+            "count": 70975823
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 50
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 63452,
+            "value": 0
+        },
+        "success_total": {
+            "rate": 1268.9608676002965,
+            "count": 63452
+        },
+        "vus_max": {
+            "value": 50,
+            "min": 50,
+            "max": 50
+        },
+        "http_reqs": {
+            "count": 63452,
+            "rate": 1268.9608676002965
+        },
+        "http_req_blocked": {
+            "p(90)": 0.006,
+            "p(95)": 0.009,
+            "avg": 0.006143998613123006,
+            "min": 0,
+            "med": 0.003,
+            "max": 9.999
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 31.33015783584482,
+            "min": 2.012,
+            "med": 25.4135,
+            "max": 98.053,
+            "p(90)": 63.915,
+            "p(95)": 68.842
+        },
+        "http_req_receiving": {
+            "avg": 0.06425627245791836,
+            "min": 0.005,
+            "med": 0.036,
+            "max": 13.234,
+            "p(90)": 0.091,
+            "p(95)": 0.147
+        },
+        "checks": {
+            "passes": 63452,
+            "fails": 0,
+            "value": 1
+        },
+        "data_sent": {
+            "count": 6596339,
+            "rate": 131918.55355900005
+        },
+        "http_req_sending": {
+            "avg": 0.01892662169828987,
+            "min": 0.001,
+            "med": 0.01,
+            "max": 8.605,
+            "p(90)": 0.023,
+            "p(95)": 0.036
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 31661,
+                    "fails": 0
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 12570,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 19221
+                }
+            }
+    }
+}

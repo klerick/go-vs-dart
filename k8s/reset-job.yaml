@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: reset-data
+  namespace: bench
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: reset
+          image: postgres:17-alpine
+          env:
+            - name: PGHOST
+              value: postgres
+            - name: PGUSER
+              value: bench
+            - name: PGPASSWORD
+              value: bench
+            - name: PGDATABASE
+              value: bench
+          command:
+            - sh
+            - -c
+            - |
+              echo "Resetting orders to 100k..."
+              psql <<'SQL'
+              TRUNCATE orders RESTART IDENTITY;
+
+              INSERT INTO orders (user_id, product_id, quantity, total, created_at)
+              SELECT
+                (random() * 99 + 1)::int,
+                (random() * 99 + 1)::int,
+                (random() * 4 + 1)::int,
+                (random() * 500 + 1)::numeric(10,2),
+                NOW() - (random() * interval '90 days')
+              FROM generate_series(1, 100000);
+
+              ANALYZE orders;
+              SQL
+
+              echo "Done. Row count:"
+              psql -c "SELECT count(*) FROM orders;"

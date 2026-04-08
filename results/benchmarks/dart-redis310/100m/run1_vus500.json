@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "http_req_connecting": {
+            "avg": 0.07626384163315804,
+            "min": 0,
+            "med": 0,
+            "max": 3.174,
+            "p(90)": 0.3868000000000001,
+            "p(95)": 0.5147999999999997
+        },
+        "http_req_tls_handshaking": {
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0
+        },
+        "data_received": {
+            "count": 3538972,
+            "rate": 69162.28198953807
+        },
+        "http_reqs": {
+            "count": 3233,
+            "rate": 63.18265803520812
+        },
+        "http_req_receiving": {
+            "p(90)": 0.201,
+            "p(95)": 0.28419999999999956,
+            "avg": 1.044014846891434,
+            "min": 0.009,
+            "med": 0.073,
+            "max": 195.429
+        },
+        "http_req_sending": {
+            "min": 0.002,
+            "med": 0.021,
+            "max": 3.185,
+            "p(90)": 0.093,
+            "p(95)": 0.12739999999999985,
+            "avg": 0.0407958552428089
+        },
+        "data_sent": {
+            "count": 341379,
+            "rate": 6671.584478008449
+        },
+        "iterations": {
+            "rate": 63.18265803520812,
+            "count": 3233
+        },
+        "vus": {
+            "value": 21,
+            "min": 21,
+            "max": 500
+        },
+        "vus_max": {
+            "value": 500,
+            "min": 500,
+            "max": 500
+        },
+        "http_req_duration": {
+            "min": 4.11,
+            "med": 7802.274,
+            "max": 9893.073,
+            "p(90)": 9500.0582,
+            "p(95)": 9597.189400000001,
+            "avg": 6638.09316764614
+        },
+        "http_req_waiting": {
+            "p(95)": 9597.07,
+            "avg": 6637.008356944007,
+            "min": 4.083,
+            "med": 7802.217,
+            "max": 9893,
+            "p(90)": 9499.847600000001
+        },
+        "iteration_duration": {
+            "p(95)": 9597.4824254,
+            "avg": 6638.476018841933,
+            "min": 4.165375,
+            "med": 7802.440458,
+            "max": 9893.286291,
+            "p(90)": 9500.3379336
+        },
+        "http_req_blocked": {
+            "avg": 0.10037179090627628,
+            "min": 0,
+            "med": 0.005,
+            "max": 3.343,
+            "p(90)": 0.489,
+            "p(95)": 0.647
+        },
+        "success_total": {
+            "count": 3233,
+            "rate": 63.18265803520812
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 6638.09316764614,
+            "min": 4.11,
+            "med": 7802.274,
+            "max": 9893.073,
+            "p(90)": 9500.0582,
+            "p(95)": 9597.189400000001
+        },
+        "checks": {
+            "passes": 3233,
+            "fails": 0,
+            "value": 1
+        },
+        "http_req_failed": {
+            "fails": 3233,
+            "passes": 0,
+            "value": 0
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 1611,
+                    "fails": 0,
+                    "name": "GET /orders/:id 200"
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 710,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "passes": 912,
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b"
+                }
+            }
+    }
+}

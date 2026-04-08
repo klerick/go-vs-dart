@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "http_req_blocked": {
+            "p(90)": 0.008,
+            "p(95)": 0.028,
+            "avg": 0.029906843533311515,
+            "min": 0,
+            "med": 0.003,
+            "max": 15.119
+        },
+        "success_total": {
+            "count": 13268,
+            "rate": 265.2674959188232
+        },
+        "iterations": {
+            "count": 13268,
+            "rate": 265.2674959188232
+        },
+        "vus": {
+            "value": 4,
+            "min": 4,
+            "max": 500
+        },
+        "checks": {
+            "passes": 13268,
+            "fails": 0,
+            "value": 1
+        },
+        "http_req_connecting": {
+            "med": 0,
+            "max": 14.486,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.0193292131444076,
+            "min": 0
+        },
+        "http_reqs": {
+            "count": 13268,
+            "rate": 265.2674959188232
+        },
+        "vus_max": {
+            "value": 500,
+            "min": 500,
+            "max": 500
+        },
+        "http_req_duration": {
+            "avg": 1527.611355064815,
+            "min": 2.676,
+            "med": 1654.0325,
+            "max": 2487.466,
+            "p(90)": 2307.2531999999997,
+            "p(95)": 2381.6684499999997
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 13268,
+            "value": 0
+        },
+        "data_received": {
+            "count": 14142743,
+            "rate": 282756.257237976
+        },
+        "http_req_receiving": {
+            "min": 0.006,
+            "med": 0.039,
+            "max": 4.933,
+            "p(90)": 0.096,
+            "p(95)": 0.132,
+            "avg": 0.05752034971359614
+        },
+        "http_req_sending": {
+            "avg": 0.020538362978594203,
+            "min": 0.001,
+            "med": 0.011,
+            "max": 4.987,
+            "p(90)": 0.029,
+            "p(95)": 0.06
+        },
+        "iteration_duration": {
+            "avg": 1527.824375423195,
+            "min": 2.696583,
+            "med": 1654.985166,
+            "max": 2487.742958,
+            "p(90)": 2307.4204249,
+            "p(95)": 2381.86432895
+        },
+        "http_req_waiting": {
+            "max": 2487.372,
+            "p(90)": 2307.1988,
+            "p(95)": 2381.5642000000003,
+            "avg": 1527.5332963521314,
+            "min": 2.667,
+            "med": 1653.885
+        },
+        "data_sent": {
+            "count": 1387679,
+            "rate": 27743.905145397697
+        },
+        "http_req_tls_handshaking": {
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 1527.611355064815,
+            "min": 2.676,
+            "med": 1654.0325,
+            "max": 2487.466,
+            "p(90)": 2307.2531999999997,
+            "p(95)": 2381.6684499999997
+        }
+    },
+    "root_group": {
+        "checks": {
+            "POST /orders 201": {
+                "name": "POST /orders 201",
+                "path": "::POST /orders 201",
+                "id": "4b499a5302314fdd343249234e5fd479",
+                "passes": 2720,
+                "fails": 0
+            },
+            "GET /orders/:id 200": {
+                "name": "GET /orders/:id 200",
+                "path": "::GET /orders/:id 200",
+                "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                "passes": 6517,
+                "fails": 0
+            },
+            "GET /orders?user_id 200": {
+                "passes": 4031,
+                "fails": 0,
+                "name": "GET /orders?user_id 200",
+                "path": "::GET /orders?user_id 200",
+                "id": "ab0b46c92b84870e38e5a604ac36187b"
+            }
+        },
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {}
+    }
+}

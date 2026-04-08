@@ -1,0 +1,145 @@
+{
+    "root_group": {
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 12719,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 7847,
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200"
+                },
+                "POST /orders 201": {
+                    "fails": 0,
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 5090
+                }
+            },
+        "name": ""
+    },
+    "metrics": {
+        "vus": {
+            "value": 1,
+            "min": 0,
+            "max": 10
+        },
+        "http_req_connecting": {
+            "med": 0,
+            "max": 1.837,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.00021534923604614903,
+            "min": 0
+        },
+        "http_req_receiving": {
+            "max": 6.219,
+            "p(90)": 0.091,
+            "p(95)": 0.138,
+            "avg": 0.059871842843777605,
+            "min": 0.004,
+            "med": 0.036
+        },
+        "success_total": {
+            "count": 25656,
+            "rate": 513.1145917722027
+        },
+        "vus_max": {
+            "min": 10,
+            "max": 10,
+            "value": 10
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 15.417983824446537,
+            "min": 1.711,
+            "med": 5.29,
+            "max": 272.062,
+            "p(90)": 69.86,
+            "p(95)": 74.604
+        },
+        "data_sent": {
+            "count": 2668936,
+            "rate": 53378.15739422107
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 25656,
+            "value": 0
+        },
+        "iteration_duration": {
+            "avg": 15.582080175748338,
+            "min": 1.817083,
+            "med": 5.4416875000000005,
+            "max": 272.156625,
+            "p(90)": 70.098792,
+            "p(95)": 74.794292
+        },
+        "http_reqs": {
+            "count": 25656,
+            "rate": 513.1145917722027
+        },
+        "http_req_blocked": {
+            "min": 0,
+            "med": 0.003,
+            "max": 2.87,
+            "p(90)": 0.006,
+            "p(95)": 0.009,
+            "avg": 0.005126169317118534
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_duration": {
+            "med": 5.29,
+            "max": 272.062,
+            "p(90)": 69.86,
+            "p(95)": 74.604,
+            "avg": 15.417983824446537,
+            "min": 1.711
+        },
+        "checks": {
+            "fails": 0,
+            "passes": 25656,
+            "value": 1
+        },
+        "iterations": {
+            "rate": 513.1145917722027,
+            "count": 25656
+        },
+        "http_req_waiting": {
+            "p(95)": 74.48025,
+            "avg": 15.338976769566498,
+            "min": 1.679,
+            "med": 5.2204999999999995,
+            "max": 272.007,
+            "p(90)": 69.742
+        },
+        "http_req_sending": {
+            "max": 5.636,
+            "p(90)": 0.026,
+            "p(95)": 0.037,
+            "avg": 0.019135212036169462,
+            "min": 0.001,
+            "med": 0.011
+        },
+        "data_received": {
+            "count": 26375751,
+            "rate": 527509.460050291
+        }
+    }
+}

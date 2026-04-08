@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "vus": {
+            "min": 1,
+            "max": 50,
+            "value": 1
+        },
+        "vus_max": {
+            "value": 50,
+            "min": 50,
+            "max": 50
+        },
+        "http_req_waiting": {
+            "avg": 455.71338323489414,
+            "min": 2.058,
+            "med": 407.7625,
+            "max": 1205.585,
+            "p(90)": 706.8184000000001,
+            "p(95)": 801.4968
+        },
+        "http_reqs": {
+            "count": 4402,
+            "rate": 87.99122118662298
+        },
+        "checks": {
+            "passes": 4402,
+            "fails": 0,
+            "value": 1
+        },
+        "success_total": {
+            "count": 4402,
+            "rate": 87.99122118662298
+        },
+        "http_req_duration{expected_response:true}": {
+            "med": 407.8845,
+            "max": 1205.669,
+            "p(90)": 706.8997,
+            "p(95)": 801.5783,
+            "avg": 455.8045642889586,
+            "min": 2.155
+        },
+        "iterations": {
+            "count": 4402,
+            "rate": 87.99122118662298
+        },
+        "http_req_duration": {
+            "p(95)": 801.5783,
+            "avg": 455.8045642889586,
+            "min": 2.155,
+            "med": 407.8845,
+            "max": 1205.669,
+            "p(90)": 706.8997
+        },
+        "http_req_connecting": {
+            "avg": 0.008085415720127215,
+            "min": 0,
+            "med": 0,
+            "max": 3.841,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_failed": {
+            "fails": 4402,
+            "passes": 0,
+            "value": 0
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "data_sent": {
+            "count": 456783,
+            "rate": 9130.598361492323
+        },
+        "data_received": {
+            "count": 4564553,
+            "rate": 91240.47992754736
+        },
+        "http_req_blocked": {
+            "med": 0.004,
+            "max": 4.04,
+            "p(90)": 0.01,
+            "p(95)": 0.012,
+            "avg": 0.016714675147660365,
+            "min": 0
+        },
+        "http_req_sending": {
+            "avg": 0.02180872330758778,
+            "min": 0.002,
+            "med": 0.015,
+            "max": 0.95,
+            "p(90)": 0.036,
+            "p(95)": 0.049
+        },
+        "http_req_receiving": {
+            "p(90)": 0.141,
+            "p(95)": 0.179,
+            "avg": 0.06937233075874584,
+            "min": 0.007,
+            "med": 0.047,
+            "max": 1.499
+        },
+        "iteration_duration": {
+            "med": 408.1129165,
+            "max": 1205.937125,
+            "p(90)": 707.1304958000001,
+            "p(95)": 801.8927292,
+            "avg": 456.0280370268059,
+            "min": 2.321834
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders?user_id 200": {
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 1330,
+                    "fails": 0
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 863,
+                    "fails": 0
+                },
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 2209,
+                    "fails": 0
+                }
+            }
+    }
+}

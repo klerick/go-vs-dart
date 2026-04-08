@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "success_total": {
+            "count": 38619,
+            "rate": 772.2722371320306
+        },
+        "vus_max": {
+            "value": 10,
+            "min": 10,
+            "max": 10
+        },
+        "data_received": {
+            "count": 44428398,
+            "rate": 888443.9865261201
+        },
+        "iteration_duration": {
+            "avg": 10.344527702788765,
+            "min": 3.503208,
+            "med": 9.559916,
+            "max": 219.508291,
+            "p(90)": 15.132283600000001,
+            "p(95)": 17.040203899999995
+        },
+        "http_reqs": {
+            "count": 38619,
+            "rate": 772.2722371320306
+        },
+        "http_req_waiting": {
+            "med": 9.341,
+            "max": 219.313,
+            "p(90)": 14.883400000000002,
+            "p(95)": 16.761299999999995,
+            "avg": 10.116812760558362,
+            "min": 3.442
+        },
+        "vus": {
+            "value": 1,
+            "min": 0,
+            "max": 10
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 10.215740335068322,
+            "min": 3.468,
+            "med": 9.439,
+            "max": 219.379,
+            "p(90)": 14.982400000000002,
+            "p(95)": 16.878
+        },
+        "http_req_tls_handshaking": {
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0
+        },
+        "http_req_receiving": {
+            "avg": 0.08421256376394932,
+            "min": 0.004,
+            "med": 0.044,
+            "max": 7.281,
+            "p(90)": 0.168,
+            "p(95)": 0.246
+        },
+        "data_sent": {
+            "count": 4008564,
+            "rate": 80160.094460419
+        },
+        "checks": {
+            "passes": 38619,
+            "fails": 0,
+            "value": 1
+        },
+        "iterations": {
+            "count": 38619,
+            "rate": 772.2722371320306
+        },
+        "http_req_connecting": {
+            "p(95)": 0,
+            "avg": 0.00009228618037753438,
+            "min": 0,
+            "med": 0,
+            "max": 0.621,
+            "p(90)": 0
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 38619,
+            "value": 0
+        },
+        "http_req_duration": {
+            "min": 3.468,
+            "med": 9.439,
+            "max": 219.379,
+            "p(90)": 14.982400000000002,
+            "p(95)": 16.878,
+            "avg": 10.215740335068322
+        },
+        "http_req_blocked": {
+            "avg": 0.004305833915947665,
+            "min": 0,
+            "med": 0.003,
+            "max": 4.125,
+            "p(90)": 0.006,
+            "p(95)": 0.007
+        },
+        "http_req_sending": {
+            "avg": 0.014715010746004542,
+            "min": 0.001,
+            "med": 0.011,
+            "max": 5.716,
+            "p(90)": 0.021,
+            "p(95)": 0.028
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "passes": 19376,
+                    "fails": 0,
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec"
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 7588,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 11655,
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200"
+                }
+            }
+    }
+}

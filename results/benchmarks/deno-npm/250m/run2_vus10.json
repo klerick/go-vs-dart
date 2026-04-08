@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "data_sent": {
+            "count": 1230519,
+            "rate": 24609.47880088631
+        },
+        "vus_max": {
+            "min": 10,
+            "max": 10,
+            "value": 10
+        },
+        "checks": {
+            "passes": 11850,
+            "fails": 0,
+            "value": 1
+        },
+        "iteration_duration": {
+            "avg": 33.777045897805884,
+            "min": 2.81025,
+            "med": 12.192687500000002,
+            "max": 277.828125,
+            "p(90)": 84.7078211,
+            "p(95)": 88.1824769
+        },
+        "http_reqs": {
+            "count": 11850,
+            "rate": 236.99132137781112
+        },
+        "http_req_connecting": {
+            "max": 3.034,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.0005956118143459916,
+            "min": 0,
+            "med": 0
+        },
+        "success_total": {
+            "count": 11850,
+            "rate": 236.99132137781112
+        },
+        "http_req_sending": {
+            "max": 4.013,
+            "p(90)": 0.029,
+            "p(95)": 0.039,
+            "avg": 0.020787594936708162,
+            "min": 0.001,
+            "med": 0.013
+        },
+        "http_req_waiting": {
+            "max": 277.5,
+            "p(90)": 84.46520000000001,
+            "p(95)": 87.90455,
+            "avg": 33.5041082700422,
+            "min": 2.64,
+            "med": 11.9665
+        },
+        "http_req_receiving": {
+            "med": 0.042,
+            "max": 4.649,
+            "p(90)": 0.103,
+            "p(95)": 0.136,
+            "avg": 0.06388025316455667,
+            "min": 0.005
+        },
+        "vus": {
+            "max": 10,
+            "value": 1,
+            "min": 0
+        },
+        "data_received": {
+            "count": 12462894,
+            "rate": 249248.75251068306
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_blocked": {
+            "avg": 0.006368438818565475,
+            "min": 0,
+            "med": 0.003,
+            "max": 3.157,
+            "p(90)": 0.007,
+            "p(95)": 0.009
+        },
+        "http_req_duration": {
+            "p(95)": 87.992,
+            "avg": 33.588776118143436,
+            "min": 2.686,
+            "med": 12.0335,
+            "max": 277.583,
+            "p(90)": 84.5421
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(90)": 84.5421,
+            "p(95)": 87.992,
+            "avg": 33.588776118143436,
+            "min": 2.686,
+            "med": 12.0335,
+            "max": 277.583
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 11850,
+            "value": 0
+        },
+        "iterations": {
+            "count": 11850,
+            "rate": 236.99132137781112
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "POST /orders 201": {
+                    "passes": 2340,
+                    "fails": 0,
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479"
+                },
+                "GET /orders/:id 200": {
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 5973,
+                    "fails": 0,
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200"
+                },
+                "GET /orders?user_id 200": {
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 3537
+                }
+            }
+    }
+}

@@ -1,0 +1,145 @@
+{
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders?user_id 200": {
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 13692,
+                    "fails": 0
+                },
+                "GET /orders/:id 200": {
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 22812,
+                    "fails": 0,
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200"
+                },
+                "POST /orders 201": {
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 9154,
+                    "fails": 0,
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201"
+                }
+            }
+    },
+    "metrics": {
+        "success_total": {
+            "count": 45658,
+            "rate": 913.1528774075562
+        },
+        "vus_max": {
+            "value": 10,
+            "min": 10,
+            "max": 10
+        },
+        "http_reqs": {
+            "count": 45658,
+            "rate": 913.1528774075562
+        },
+        "checks": {
+            "passes": 45658,
+            "fails": 0,
+            "value": 1
+        },
+        "http_req_tls_handshaking": {
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0
+        },
+        "http_req_receiving": {
+            "max": 6.588,
+            "p(90)": 0.077,
+            "p(95)": 0.108,
+            "avg": 0.047361864295411844,
+            "min": 0.004,
+            "med": 0.032
+        },
+        "http_req_waiting": {
+            "med": 7.394,
+            "max": 76.84,
+            "p(90)": 12.662200000000004,
+            "p(95)": 15.369649999999979,
+            "avg": 8.551806627535084,
+            "min": 2.373
+        },
+        "data_received": {
+            "count": 48249190,
+            "rate": 964976.2731850691
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(90)": 12.733,
+            "p(95)": 15.439899999999987,
+            "avg": 8.613565530684586,
+            "min": 2.386,
+            "med": 7.4544999999999995,
+            "max": 76.887
+        },
+        "http_req_connecting": {
+            "min": 0,
+            "med": 0,
+            "max": 1.455,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.00011827062070173902
+        },
+        "data_sent": {
+            "count": 4754491,
+            "rate": 95089.0783051892
+        },
+        "iterations": {
+            "count": 45658,
+            "rate": 913.1528774075562
+        },
+        "http_req_blocked": {
+            "min": 0,
+            "med": 0.003,
+            "max": 5.248,
+            "p(90)": 0.005,
+            "p(95)": 0.007,
+            "avg": 0.004496517587278935
+        },
+        "iteration_duration": {
+            "avg": 8.746808542073689,
+            "min": 2.409334,
+            "med": 7.5825625,
+            "max": 76.952667,
+            "p(90)": 12.9002626,
+            "p(95)": 15.617981199999994
+        },
+        "http_req_duration": {
+            "p(90)": 12.733,
+            "p(95)": 15.439899999999987,
+            "avg": 8.613565530684586,
+            "min": 2.386,
+            "med": 7.4544999999999995,
+            "max": 76.887
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 45658,
+            "value": 0
+        },
+        "vus": {
+            "value": 1,
+            "min": 0,
+            "max": 10
+        },
+        "http_req_sending": {
+            "max": 4.879,
+            "p(90)": 0.021,
+            "p(95)": 0.029,
+            "avg": 0.014397038854087156,
+            "min": 0.001,
+            "med": 0.01
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "node-service",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "pg": "^8.13.0",
+    "redis": "^4.7.0"
+  }
+}

@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "iterations": {
+            "count": 13368,
+            "rate": 267.3336729798849
+        },
+        "http_req_blocked": {
+            "p(90)": 0.008,
+            "p(95)": 0.024,
+            "avg": 0.028528800119686983,
+            "min": 0,
+            "med": 0.003,
+            "max": 6.588
+        },
+        "http_req_connecting": {
+            "max": 6.49,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.018766157989228007,
+            "min": 0,
+            "med": 0
+        },
+        "success_total": {
+            "rate": 267.3336729798849,
+            "count": 13368
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 1514.0371754189132,
+            "min": 2.861,
+            "med": 1593.199,
+            "max": 2497.832,
+            "p(90)": 2290.9563000000003,
+            "p(95)": 2301.168
+        },
+        "http_req_sending": {
+            "avg": 0.021200628366247053,
+            "min": 0.001,
+            "med": 0.011,
+            "max": 6.674,
+            "p(90)": 0.029,
+            "p(95)": 0.06
+        },
+        "checks": {
+            "passes": 13368,
+            "fails": 0,
+            "value": 1
+        },
+        "iteration_duration": {
+            "min": 2.945167,
+            "med": 1593.3149170000002,
+            "max": 2498.176708,
+            "p(90)": 2291.1483333,
+            "p(95)": 2301.4324692,
+            "avg": 1514.2480855659808
+        },
+        "http_req_duration": {
+            "max": 2497.832,
+            "p(90)": 2290.9563000000003,
+            "p(95)": 2301.168,
+            "avg": 1514.0371754189132,
+            "min": 2.861,
+            "med": 1593.199
+        },
+        "http_req_failed": {
+            "fails": 13368,
+            "passes": 0,
+            "value": 0
+        },
+        "vus": {
+            "value": 3,
+            "min": 3,
+            "max": 500
+        },
+        "http_req_waiting": {
+            "avg": 1513.9584549670851,
+            "min": 2.841,
+            "med": 1593.1605,
+            "max": 2497.784,
+            "p(90)": 2290.8658,
+            "p(95)": 2301.1023
+        },
+        "http_req_receiving": {
+            "max": 6.687,
+            "p(90)": 0.092,
+            "p(95)": 0.127,
+            "avg": 0.05751982345900637,
+            "min": 0.005,
+            "med": 0.038
+        },
+        "data_received": {
+            "count": 14449472,
+            "rate": 288960.9831223821
+        },
+        "vus_max": {
+            "min": 500,
+            "max": 500,
+            "value": 500
+        },
+        "data_sent": {
+            "count": 1392170,
+            "rate": 27840.658251975343
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_reqs": {
+            "count": 13368,
+            "rate": 267.3336729798849
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 6568,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 4138
+                },
+                "POST /orders 201": {
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 2662,
+                    "fails": 0,
+                    "name": "POST /orders 201"
+                }
+            }
+    }
+}

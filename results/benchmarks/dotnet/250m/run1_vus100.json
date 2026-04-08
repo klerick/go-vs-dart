@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "http_req_blocked": {
+            "min": 0,
+            "med": 0.003,
+            "max": 3.443,
+            "p(90)": 0.006,
+            "p(95)": 0.009,
+            "avg": 0.008411191432395378
+        },
+        "http_req_duration": {
+            "avg": 214.2264765729574,
+            "min": 2.323,
+            "med": 213.554,
+            "max": 480.6,
+            "p(90)": 301.11019999999996,
+            "p(95)": 306.49199999999996
+        },
+        "data_sent": {
+            "count": 1935363,
+            "rate": 38699.26008895441
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(90)": 301.11019999999996,
+            "p(95)": 306.49199999999996,
+            "avg": 214.2264765729574,
+            "min": 2.323,
+            "med": 213.554,
+            "max": 480.6
+        },
+        "success_total": {
+            "rate": 373.4228060375359,
+            "count": 18675
+        },
+        "data_received": {
+            "count": 20717495,
+            "rate": 414264.26329149236
+        },
+        "iteration_duration": {
+            "avg": 214.40021638034892,
+            "min": 2.429833,
+            "med": 213.712916,
+            "max": 480.801708,
+            "p(90)": 301.2830752,
+            "p(95)": 306.6515749
+        },
+        "http_req_sending": {
+            "med": 0.01,
+            "max": 6.487,
+            "p(90)": 0.025,
+            "p(95)": 0.035,
+            "avg": 0.017448460508700317,
+            "min": 0.001
+        },
+        "http_req_receiving": {
+            "max": 79.68,
+            "p(90)": 0.095,
+            "p(95)": 0.14,
+            "avg": 0.06249943775100271,
+            "min": 0.006,
+            "med": 0.036
+        },
+        "http_req_waiting": {
+            "avg": 214.14652867469943,
+            "min": 2.284,
+            "med": 213.468,
+            "max": 480.563,
+            "p(90)": 301.05019999999996,
+            "p(95)": 306.4136
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 18675,
+            "value": 0
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 100
+        },
+        "http_req_connecting": {
+            "avg": 0.0026463186077643913,
+            "min": 0,
+            "med": 0,
+            "max": 1.869,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_reqs": {
+            "count": 18675,
+            "rate": 373.4228060375359
+        },
+        "checks": {
+            "passes": 18675,
+            "fails": 0,
+            "value": 1
+        },
+        "vus_max": {
+            "value": 100,
+            "min": 100,
+            "max": 100
+        },
+        "iterations": {
+            "count": 18675,
+            "rate": 373.4228060375359
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 9436,
+                    "fails": 0
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 3641,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 5598
+                }
+            }
+    }
+}

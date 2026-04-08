@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "data_received": {
+            "count": 13305705,
+            "rate": 266093.95136600256
+        },
+        "iterations": {
+            "count": 12160,
+            "rate": 243.1815862902861
+        },
+        "iteration_duration": {
+            "p(90)": 85.7256792,
+            "p(95)": 89.22657115,
+            "avg": 32.90816456381574,
+            "min": 2.420416,
+            "med": 8.8316665,
+            "max": 399.100083
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 12160,
+            "value": 0
+        },
+        "vus": {
+            "min": 0,
+            "max": 10,
+            "value": 1
+        },
+        "http_reqs": {
+            "count": 12160,
+            "rate": 243.1815862902861
+        },
+        "http_req_tls_handshaking": {
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0
+        },
+        "http_req_sending": {
+            "p(95)": 0.035,
+            "avg": 0.01877713815789417,
+            "min": 0.001,
+            "med": 0.012,
+            "max": 2.91,
+            "p(90)": 0.027
+        },
+        "vus_max": {
+            "value": 10,
+            "min": 10,
+            "max": 10
+        },
+        "http_req_receiving": {
+            "med": 0.041,
+            "max": 3.995,
+            "p(90)": 0.096,
+            "p(95)": 0.13504999999999948,
+            "avg": 0.05917154605263092,
+            "min": 0.005
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(90)": 85.54910000000001,
+            "p(95)": 89.07319999999999,
+            "avg": 32.7433417763159,
+            "min": 2.383,
+            "med": 8.654,
+            "max": 398.837
+        },
+        "http_req_waiting": {
+            "avg": 32.66539309210514,
+            "min": 2.341,
+            "med": 8.5815,
+            "max": 398.674,
+            "p(90)": 85.4683,
+            "p(95)": 88.9721
+        },
+        "success_total": {
+            "count": 12160,
+            "rate": 243.1815862902861
+        },
+        "http_req_blocked": {
+            "min": 0,
+            "med": 0.003,
+            "max": 9.112,
+            "p(90)": 0.007,
+            "p(95)": 0.009,
+            "avg": 0.006025164473684354
+        },
+        "checks": {
+            "passes": 12160,
+            "fails": 0,
+            "value": 1
+        },
+        "http_req_connecting": {
+            "med": 0,
+            "max": 8.921,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.0010104440789473683,
+            "min": 0
+        },
+        "data_sent": {
+            "count": 1262804,
+            "rate": 25254.16775441764
+        },
+        "http_req_duration": {
+            "max": 398.837,
+            "p(90)": 85.54910000000001,
+            "p(95)": 89.07319999999999,
+            "avg": 32.7433417763159,
+            "min": 2.383,
+            "med": 8.654
+        }
+    },
+    "root_group": {
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 6119,
+                    "fails": 0,
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200"
+                },
+                "GET /orders?user_id 200": {
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 3640,
+                    "fails": 0
+                },
+                "POST /orders 201": {
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 2401,
+                    "fails": 0,
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201"
+                }
+            },
+        "name": "",
+        "path": ""
+    }
+}

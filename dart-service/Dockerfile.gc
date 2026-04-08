@@ -1,0 +1,14 @@
+FROM dart:3.11 AS builder
+
+WORKDIR /app
+COPY pubspec.yaml pubspec.lock ./
+COPY ioredis/ ioredis/
+RUN dart pub get
+COPY bin/ bin/
+RUN dart compile exe bin/server.dart -o server
+
+FROM alpine:latest
+RUN apk add --no-cache libstdc++ gcompat
+COPY --from=builder /app/server /server
+ENV MALLOC_TRIM_THRESHOLD_=131072
+ENTRYPOINT ["/server", "--old_gen_heap_size=30", "--dontneed_on_sweep=true", "--mark_when_idle=true", "--use_compactor=true", "--new_gen_semi_max_size=4"]

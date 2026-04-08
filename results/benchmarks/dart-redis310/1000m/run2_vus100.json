@@ -1,0 +1,148 @@
+{
+    "metrics": {
+        "iterations": {
+            "rate": 809.8181996940642,
+            "count": 40492
+        },
+        "http_req_blocked": {
+            "avg": 0.005962362935886896,
+            "min": 0,
+            "med": 0.003,
+            "max": 2.788,
+            "p(90)": 0.006,
+            "p(95)": 0.007
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "success_total": {
+            "count": 40492,
+            "rate": 809.8181996940642
+        },
+        "http_req_waiting": {
+            "p(95)": 161.47154999999995,
+            "avg": 98.57930746814134,
+            "min": 3.725,
+            "med": 100.903,
+            "max": 209.097,
+            "p(90)": 153.38250000000002
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 98.69565096809193,
+            "min": 3.778,
+            "med": 100.965,
+            "max": 209.198,
+            "p(90)": 153.4667,
+            "p(95)": 161.56229999999996
+        },
+        "data_received": {
+            "count": 46056820,
+            "rate": 921111.6036756291
+        },
+        "http_req_connecting": {
+            "max": 2.24,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.001305517139187988,
+            "min": 0,
+            "med": 0
+        },
+        "http_reqs": {
+            "count": 40492,
+            "rate": 809.8181996940642
+        },
+        "vus_max": {
+            "value": 100,
+            "min": 100,
+            "max": 100
+        },
+        "iteration_duration": {
+            "min": 3.891584,
+            "med": 101.1435835,
+            "max": 209.431292,
+            "p(90)": 153.6048,
+            "p(95)": 161.75326875,
+            "avg": 98.84991279116882
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 100
+        },
+        "http_req_receiving": {
+            "p(95)": 0.247,
+            "avg": 0.09910945371925235,
+            "min": 0.005,
+            "med": 0.05,
+            "max": 14.289,
+            "p(90)": 0.166
+        },
+        "checks": {
+            "passes": 40492,
+            "fails": 0,
+            "value": 1
+        },
+        "http_req_sending": {
+            "avg": 0.01723404623135271,
+            "min": 0.001,
+            "med": 0.012,
+            "max": 12.421,
+            "p(90)": 0.024,
+            "p(95)": 0.031
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 40492,
+            "value": 0
+        },
+        "data_sent": {
+            "count": 4206367,
+            "rate": 84125.0753529715
+        },
+        "http_req_duration": {
+            "avg": 98.69565096809193,
+            "min": 3.778,
+            "med": 100.965,
+            "max": 209.198,
+            "p(90)": 153.4667,
+            "p(95)": 161.56229999999996,
+            "thresholds": {
+                "p(95)<1000": false
+            }
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders?user_id 200": {
+                    "passes": 12024,
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b"
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 8025,
+                    "fails": 0
+                },
+                "GET /orders/:id 200": {
+                    "passes": 20443,
+                    "fails": 0,
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec"
+                }
+            }
+    }
+}

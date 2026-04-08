@@ -1,0 +1,30 @@
+# Dart
+.dart_tool/
+.packages
+.pub-cache/
+
+# Node / Bun / Deno
+node_modules/
+dist/
+*.tsbuildinfo
+
+# .NET
+dotnet-service/bin/
+dotnet-service/obj/
+*.user
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.output
+*.log
+/results/*.log
+/results/*.json
+/results/*.csv

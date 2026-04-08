@@ -1,0 +1,9 @@
+name: dart_service
+description: Bare-bones Dart HTTP service for benchmark (redis 3.1.0).
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  postgres: ^3.5.5
+  redis: ^3.1.0

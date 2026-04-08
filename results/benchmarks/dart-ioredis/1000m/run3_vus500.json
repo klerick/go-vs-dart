@@ -1,0 +1,145 @@
+{
+    "root_group": {
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 19945,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 11913,
+                    "fails": 0
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 7807,
+                    "fails": 0
+                }
+            },
+        "name": "",
+        "path": ""
+    },
+    "metrics": {
+        "http_req_failed": {
+            "fails": 39665,
+            "passes": 0,
+            "value": 0
+        },
+        "http_req_tls_handshaking": {
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0
+        },
+        "vus_max": {
+            "value": 500,
+            "min": 500,
+            "max": 500
+        },
+        "http_reqs": {
+            "count": 39665,
+            "rate": 793.2304336909654
+        },
+        "http_req_duration": {
+            "p(95)": 807.1138,
+            "avg": 506.16435230052224,
+            "min": 3.853,
+            "med": 512.591,
+            "max": 870.294,
+            "p(90)": 786.616
+        },
+        "http_req_duration{expected_response:true}": {
+            "min": 3.853,
+            "med": 512.591,
+            "max": 870.294,
+            "p(90)": 786.616,
+            "p(95)": 807.1138,
+            "avg": 506.16435230052224
+        },
+        "checks": {
+            "passes": 39665,
+            "fails": 0,
+            "value": 1
+        },
+        "http_req_blocked": {
+            "med": 0.004,
+            "max": 18.724,
+            "p(90)": 0.007,
+            "p(95)": 0.009,
+            "avg": 0.013274549350809826,
+            "min": 0
+        },
+        "http_req_waiting": {
+            "p(90)": 786.5022,
+            "p(95)": 806.9874,
+            "avg": 506.03459067187794,
+            "min": 3.84,
+            "med": 512.279,
+            "max": 870.239
+        },
+        "data_received": {
+            "count": 45475859,
+            "rate": 909437.4223380609
+        },
+        "iterations": {
+            "count": 39665,
+            "rate": 793.2304336909654
+        },
+        "vus": {
+            "value": 2,
+            "min": 2,
+            "max": 500
+        },
+        "iteration_duration": {
+            "avg": 506.337121376305,
+            "min": 3.8765,
+            "med": 512.877458,
+            "max": 870.508292,
+            "p(90)": 786.7882332,
+            "p(95)": 807.272325
+        },
+        "data_sent": {
+            "count": 4117571,
+            "rate": 82344.19841379911
+        },
+        "http_req_connecting": {
+            "min": 0,
+            "med": 0,
+            "max": 18.587,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.007220093281230299
+        },
+        "http_req_sending": {
+            "p(95)": 0.035,
+            "avg": 0.018293104752299085,
+            "min": 0.001,
+            "med": 0.013,
+            "max": 3.077,
+            "p(90)": 0.026
+        },
+        "http_req_receiving": {
+            "min": 0.006,
+            "med": 0.056,
+            "max": 24.55,
+            "p(90)": 0.176,
+            "p(95)": 0.275,
+            "avg": 0.1114685238875582
+        },
+        "success_total": {
+            "count": 39665,
+            "rate": 793.2304336909654
+        }
+    }
+}

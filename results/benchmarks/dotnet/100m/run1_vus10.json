@@ -1,0 +1,145 @@
+{
+    "metrics": {
+        "http_reqs": {
+            "rate": 46.20970434504645,
+            "count": 2317
+        },
+        "http_req_waiting": {
+            "avg": 172.63887268019013,
+            "min": 2.665,
+            "med": 145.123,
+            "max": 4583.654,
+            "p(90)": 300.0262,
+            "p(95)": 396.7972
+        },
+        "checks": {
+            "passes": 2317,
+            "fails": 0,
+            "value": 1
+        },
+        "data_sent": {
+            "count": 242429,
+            "rate": 4834.947093079528
+        },
+        "vus_max": {
+            "value": 10,
+            "min": 10,
+            "max": 10
+        },
+        "data_received": {
+            "count": 2518204,
+            "rate": 50222.46971105453
+        },
+        "http_req_receiving": {
+            "med": 0.07,
+            "max": 99.194,
+            "p(90)": 0.18,
+            "p(95)": 0.222,
+            "avg": 0.16686447993094522,
+            "min": 0.01
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 172.83659387138545,
+            "min": 2.688,
+            "med": 145.17,
+            "max": 4586.614,
+            "p(90)": 300.2134,
+            "p(95)": 396.9008
+        },
+        "http_req_blocked": {
+            "min": 0,
+            "med": 0.005,
+            "max": 3.865,
+            "p(90)": 0.011,
+            "p(95)": 0.013,
+            "avg": 0.013379369874838285
+        },
+        "iteration_duration": {
+            "avg": 173.12565556927083,
+            "min": 2.756708,
+            "med": 145.415041,
+            "max": 4594.240667,
+            "p(90)": 300.5385416,
+            "p(95)": 396.9968834
+        },
+        "http_req_connecting": {
+            "avg": 0.002377643504531722,
+            "min": 0,
+            "med": 0,
+            "max": 0.896,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 2317,
+            "value": 0
+        },
+        "iterations": {
+            "count": 2317,
+            "rate": 46.20970434504645
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "vus": {
+            "value": 1,
+            "min": 0,
+            "max": 10
+        },
+        "http_req_sending": {
+            "p(90)": 0.042,
+            "p(95)": 0.0631999999999999,
+            "avg": 0.030856711264566527,
+            "min": 0.002,
+            "med": 0.018,
+            "max": 3.116
+        },
+        "success_total": {
+            "rate": 46.20970434504645,
+            "count": 2317
+        },
+        "http_req_duration": {
+            "min": 2.688,
+            "med": 145.17,
+            "max": 4586.614,
+            "p(90)": 300.2134,
+            "p(95)": 396.9008,
+            "avg": 172.83659387138545
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /orders/:id 200": {
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 1160,
+                    "fails": 0
+                },
+                "GET /orders?user_id 200": {
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200",
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 677,
+                    "fails": 0
+                },
+                "POST /orders 201": {
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 480,
+                    "fails": 0,
+                    "name": "POST /orders 201"
+                }
+            }
+    }
+}
