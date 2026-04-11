@@ -132,6 +132,16 @@ Each runtime has its own page with all CPU profiles tested:
 
 Memory limit is **fixed at 256Mi for all profiles** — only CPU is throttled. The point is to compare CPU efficiency under fixed memory.
 
+#### Why 100m? The noisy neighbor scenario
+
+`100m` is not a realistic production CPU limit — nobody intentionally runs a web service on 0.1 core. It's a **stress test that simulates a real-world worst case: the noisy neighbor problem**.
+
+In Kubernetes, your pod may have `requests: 1000m` and `limits: 1000m`, but if the node is overloaded by other pods (especially those without CPU limits — BestEffort QoS), the CFS scheduler throttles everyone. Your pod gets its guaranteed share, but with delays and context-switch overhead that effectively reduce available CPU to a fraction of the limit.
+
+The `100m` profile models exactly this: "what happens when your pod only gets 10% of its requested CPU due to node-level contention?" This is when liveness probes start timing out, event loops stall, and kubelet kills pods that are actually healthy but too slow to respond. In our tests, **Bun native** and **NestJS** (both adapters) were killed this way. **Go, Node.js, and Dart** survived.
+
+If your cluster has mixed QoS classes or occasional resource spikes — this scenario will happen. The `100m` test tells you which runtimes degrade gracefully and which ones crash.
+
 ### Run procedure
 
 For each `(service, profile)` combination:
