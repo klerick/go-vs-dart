@@ -27,7 +27,9 @@ Full benchmark report: [REPORT.md](REPORT.md). Per-runtime summaries and pairwis
 
 | Runtime | RPS | Idle | Peak | After 5min | Returned | Restarts |
 |---------|-----|------|------|------------|----------|----------|
-| **Go** | 1656 | **1Mi** | **29Mi** | 8Mi | 75%* | 0 |
+| Rust (axum) | 1519 | -Mi | **16Mi** | 10Mi | 38% | 0 |
+| Rust (actix) | 1514 | 1Mi | 18Mi | 14Mi | 24% | 0 |
+| **Go** | 1656 | **1Mi** | 29Mi | 8Mi | 75%* | 0 |
 | Bun (native) | **1769** | 6Mi | 85Mi | 14Mi | **90%** | 0 |
 | Node.js | 1321 | 18Mi | 39Mi | 22Mi | 81% | 0 |
 | .NET 9 (Kestrel) | 1277 | 78Mi | 113Mi | 107Mi | 17% | 0 |

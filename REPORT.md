@@ -8,7 +8,8 @@ A benchmark of HTTP web service runtimes under realistic Kubernetes constraints 
 
 ## TL;DR
 
-- **Go** is the safest choice — fastest, lowest memory, fully recovers memory, never crashes under any throttling
+- **Rust (axum)** is the new CPU efficiency champion — 2x faster than Go under throttling, half the memory, but doesn't return memory as aggressively (jemalloc holds pages)
+- **Go** is the safest choice — fast, low memory, fully recovers memory, never crashes under any throttling, simplest deployment
 - **Bun (native APIs)** is the surprise — competitive with Go on `1000m`/`250m` CPU, sometimes even faster, but **liveness probe killing** under `100m` stress
 - **Node.js** is the boring reliable middle — close to Go on `1000m`, predictable everywhere
 - **Dart** loses on every metric — slower, never returns memory, fragile ecosystem
@@ -22,6 +23,10 @@ A benchmark of HTTP web service runtimes under realistic Kubernetes constraints 
 
 - [**go vs node vs dart-redis310**](results/comparisons/go_vs_node_vs_dart-redis310.md) — the original three-way fight that started this whole thing. Dart loses everywhere.
 - [**go vs node vs bun-native vs dotnet**](results/comparisons/go_vs_node_vs_bun-native_vs_dotnet.md) — full picture of viable backend runtimes.
+
+### Rust
+
+- [**go vs axum vs actix**](results/comparisons/go_vs_axum_vs_actix.md) — Rust enters the chat. Axum (tokio + jemalloc) delivers **2x Go's throughput under CPU throttling** with half the memory. The new CPU efficiency champion. Contributed by [@zhilinstas](https://github.com/zhilinstas).
 
 ### Bun deep dive
 
@@ -84,6 +89,8 @@ Each runtime has its own page with all CPU profiles tested:
 
 | Service | Page |
 |---------|------|
+| Rust (axum) | [results/benchmarks/axum/summary.md](results/benchmarks/axum/summary.md) |
+| Rust (actix) | [results/benchmarks/actix/summary.md](results/benchmarks/actix/summary.md) |
 | Go | [results/benchmarks/go/summary.md](results/benchmarks/go/summary.md) |
 | Node.js | [results/benchmarks/node/summary.md](results/benchmarks/node/summary.md) |
 | Bun (native APIs) | [results/benchmarks/bun-native/summary.md](results/benchmarks/bun-native/summary.md) |

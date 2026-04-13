@@ -1,0 +1,145 @@
+{
+    "root_group": {
+        "groups": {},
+        "checks": {
+                "GET /orders?user_id 200": {
+                    "id": "ab0b46c92b84870e38e5a604ac36187b",
+                    "passes": 22772,
+                    "fails": 0,
+                    "name": "GET /orders?user_id 200",
+                    "path": "::GET /orders?user_id 200"
+                },
+                "GET /orders/:id 200": {
+                    "fails": 0,
+                    "name": "GET /orders/:id 200",
+                    "path": "::GET /orders/:id 200",
+                    "id": "ca384c3a859ffb946ea1d7d59aff1eec",
+                    "passes": 37964
+                },
+                "POST /orders 201": {
+                    "name": "POST /orders 201",
+                    "path": "::POST /orders 201",
+                    "id": "4b499a5302314fdd343249234e5fd479",
+                    "passes": 15209,
+                    "fails": 0
+                }
+            },
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "metrics": {
+        "vus_max": {
+            "value": 500,
+            "min": 500,
+            "max": 500
+        },
+        "http_reqs": {
+            "count": 75945,
+            "rate": 1518.5735370610028
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(90)": 340.8812,
+            "p(95)": 350.2,
+            "avg": 263.7385526631116,
+            "min": 4.694,
+            "med": 308.964,
+            "max": 505.835
+        },
+        "http_req_connecting": {
+            "p(95)": 0,
+            "avg": 0.003134636908288891,
+            "min": 0,
+            "med": 0,
+            "max": 5.138,
+            "p(90)": 0
+        },
+        "http_req_sending": {
+            "p(95)": 0.029,
+            "avg": 0.01564550661662875,
+            "min": 0.001,
+            "med": 0.01,
+            "max": 4.57,
+            "p(90)": 0.021
+        },
+        "iterations": {
+            "count": 75945,
+            "rate": 1518.5735370610028
+        },
+        "data_sent": {
+            "count": 7906688,
+            "rate": 158099.77171107757
+        },
+        "success_total": {
+            "count": 75945,
+            "rate": 1518.5735370610028
+        },
+        "http_req_tls_handshaking": {
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0
+        },
+        "http_req_blocked": {
+            "avg": 0.008375337415233657,
+            "min": 0,
+            "med": 0.003,
+            "max": 5.327,
+            "p(90)": 0.006,
+            "p(95)": 0.007
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 75945,
+            "value": 0
+        },
+        "http_req_receiving": {
+            "avg": 0.05004870630061,
+            "min": 0.005,
+            "med": 0.035,
+            "max": 12.462,
+            "p(90)": 0.075,
+            "p(95)": 0.105
+        },
+        "checks": {
+            "passes": 75945,
+            "fails": 0,
+            "value": 1
+        },
+        "iteration_duration": {
+            "min": 4.7885,
+            "med": 309.132708,
+            "max": 506.532458,
+            "p(90)": 341.0300246,
+            "p(95)": 350.4092082,
+            "avg": 263.90230519322927
+        },
+        "http_req_waiting": {
+            "p(95)": 350.1148,
+            "avg": 263.67285845019416,
+            "min": 4.663,
+            "med": 308.906,
+            "max": 505.737,
+            "p(90)": 340.8186
+        },
+        "vus": {
+            "value": 2,
+            "min": 2,
+            "max": 500
+        },
+        "http_req_duration": {
+            "avg": 263.7385526631116,
+            "min": 4.694,
+            "med": 308.964,
+            "max": 505.835,
+            "p(90)": 340.8812,
+            "p(95)": 350.2
+        },
+        "data_received": {
+            "count": 82625724,
+            "rate": 1652159.2987939455
+        }
+    }
+}

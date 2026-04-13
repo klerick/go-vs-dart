@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: axum-service
+  namespace: bench
+spec:
+  selector:
+    app: axum-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: axum-service
+  namespace: bench
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: axum-service
+  template:
+    metadata:
+      labels:
+        app: axum-service
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: your-app-node
+      containers:
+        - name: axum-service
+          image: your-registry.example.com/library/axum-bench:v1
+          env:
+            - name: HTTP_PORT
+              value: "8080"
+            - name: POSTGRES_URL
+              value: "postgres://bench:bench@postgres:5432/bench?sslmode=disable"
+            - name: REDIS_URL
+              value: "redis://redis:6379"
+            - name: WORKER_THREADS
+              value: "1"
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "1000m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
