@@ -1,0 +1,128 @@
+x-common-env: &common-env
+  POSTGRES_URL: "postgres://bench:bench@postgres:5432/bench?sslmode=disable"
+  REDIS_URL: "redis://redis:6379"
+
+x-common: &common
+  restart: unless-stopped
+  depends_on:
+    seed:
+      condition: service_completed_successfully
+  deploy:
+    resources:
+      limits:
+        cpus: "1.0"
+        memory: 256M
+
+services:
+  # ── Infrastructure ──────────────────────────────────────────
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: bench
+      POSTGRES_USER: bench
+      POSTGRES_PASSWORD: bench
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bench"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  seed:
+    image: redis:7-alpine
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./init/seed.sh:/seed.sh:ro
+    entrypoint: ["sh", "/seed.sh"]
+
+  # ── Services ────────────────────────────────────────────────
+  go-service:
+    <<: *common
+    build: ./go-service
+    environment:
+      <<: *common-env
+      HTTP_PORT: "8080"
+      GOMAXPROCS: "1"
+    ports:
+      - "8081:8080"
+
+  dart-service:
+    <<: *common
+    build: ./dart-service
+    environment:
+      <<: *common-env
+      HTTP_PORT: "8080"
+    ports:
+      - "8082:8080"
+
+  axum-service:
+    <<: *common
+    build: ./axum-service
+    environment:
+      <<: *common-env
+      HTTP_PORT: "8080"
+      WORKER_THREADS: "1"
+    ports:
+      - "8083:8080"
+
+  node-service:
+    <<: *common
+    build: ./node-service
+    environment:
+      <<: *common-env
+      HTTP_PORT: "8080"
+    ports:
+      - "8084:8080"
+
+  bun-service:
+    <<: *common
+    build: ./bun-service
+    environment:
+      <<: *common-env
+      HTTP_PORT: "8080"
+    ports:
+      - "8085:8080"
+
+  deno-service:
+    <<: *common
+    build: ./deno-service
+    environment:
+      <<: *common-env
+      HTTP_PORT: "8080"
+    ports:
+      - "8086:8080"
+
+  dotnet-service:
+    <<: *common
+    build: ./dotnet-service
+    environment:
+      <<: *common-env
+      HTTP_PORT: "8080"
+    ports:
+      - "8087:8080"
+
+  nestjs-service:
+    <<: *common
+    build: ./nestjs-service
+    environment:
+      <<: *common-env
+      HTTP_PORT: "8080"
+    ports:
+      - "8088:8080"

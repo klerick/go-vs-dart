@@ -49,6 +49,7 @@ case "$SERVICE" in
   deno-service)  LOCAL_PORT=9093 ;;
   dotnet-service) LOCAL_PORT=9094 ;;
   nestjs-service) LOCAL_PORT=9095 ;;
+  axum-service)  LOCAL_PORT=9096 ;;
   *)             LOCAL_PORT=9090 ;;
 esac
 

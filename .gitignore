@@ -8,6 +8,9 @@ node_modules/
 dist/
 *.tsbuildinfo
 
+# Rust
+axum-service/target/
+
 # .NET
 dotnet-service/bin/
 dotnet-service/obj/

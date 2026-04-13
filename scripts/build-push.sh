@@ -19,6 +19,13 @@ docker buildx build --platform linux/arm64 \
   --push \
   "$PROJECT_DIR/dart-service"
 
+echo "Building and pushing Axum service..."
+docker buildx build --platform linux/arm64 \
+  -t "$REGISTRY/axum-bench:$TAG" \
+  --push \
+  "$PROJECT_DIR/axum-service"
+
 echo "Done. Images:"
 echo "  $REGISTRY/go-bench:$TAG"
 echo "  $REGISTRY/dart-bench:$TAG"
+echo "  $REGISTRY/axum-bench:$TAG"
