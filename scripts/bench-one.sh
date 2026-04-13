@@ -50,6 +50,7 @@ case "$SERVICE" in
   dotnet-service) LOCAL_PORT=9094 ;;
   nestjs-service) LOCAL_PORT=9095 ;;
   axum-service)  LOCAL_PORT=9096 ;;
+  actix-service) LOCAL_PORT=9097 ;;
   *)             LOCAL_PORT=9090 ;;
 esac
 

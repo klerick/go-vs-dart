@@ -13,6 +13,7 @@ declare -A SERVICES=(
   [deno-service]=8086
   [dotnet-service]=8087
   [nestjs-service]=8088
+  [actix-service]=8089
 )
 
 FILTER="${1:-}"

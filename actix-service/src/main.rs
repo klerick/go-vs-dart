@@ -1,26 +1,16 @@
-use axum::{
-    extract::{Path, Query, State},
-    http::StatusCode,
-    response::{IntoResponse, Response},
-    routing::get,
-    Json, Router,
-};
+use actix_web::{web, App, HttpResponse, HttpServer};
 use chrono::{DateTime, Utc};
 use deadpool_postgres::Pool;
 use redis::AsyncCommands;
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::fmt::Write;
-use std::net::SocketAddr;
-use tokio::net::TcpListener;
-use tokio::signal;
 use tokio_postgres::NoTls;
 
 #[cfg(not(target_env = "msvc"))]
 #[global_allocator]
 static GLOBAL: tikv_jemallocator::Jemalloc = tikv_jemallocator::Jemalloc;
 
-#[derive(Clone)]
 struct AppState {
     pg: Pool,
     redis: redis::aio::ConnectionManager,
@@ -73,10 +63,6 @@ struct ListOrdersQuery {
     offset: Option<String>,
 }
 
-fn error_json(msg: &str) -> Json<ErrorBody<'_>> {
-    Json(ErrorBody { error: msg })
-}
-
 fn redis_key(prefix: &str, id: i32) -> String {
     let mut key = String::with_capacity(prefix.len() + 10);
     key.push_str(prefix);
@@ -84,27 +70,23 @@ fn redis_key(prefix: &str, id: i32) -> String {
     key
 }
 
-async fn handle_health() -> impl IntoResponse {
-    Json(HealthBody { status: "ok" })
+async fn handle_health() -> HttpResponse {
+    HttpResponse::Ok().json(HealthBody { status: "ok" })
 }
 
 async fn handle_create_order(
-    State(state): State<AppState>,
-    body: axum::body::Bytes,
-) -> Response {
+    state: web::Data<AppState>,
+    body: web::Bytes,
+) -> HttpResponse {
     let req: OrderRequest = match serde_json::from_slice(&body) {
         Ok(r) => r,
-        Err(_) => {
-            return (StatusCode::BAD_REQUEST, error_json("invalid json body")).into_response()
-        }
+        Err(_) => return HttpResponse::BadRequest().json(ErrorBody { error: "invalid json body" }),
     };
 
     if req.user_id == 0 || req.product_id == 0 || req.quantity <= 0 {
-        return (
-            StatusCode::BAD_REQUEST,
-            error_json("user_id, product_id required and quantity must be > 0"),
-        )
-            .into_response();
+        return HttpResponse::BadRequest().json(ErrorBody {
+            error: "user_id, product_id required and quantity must be > 0",
+        });
     }
 
     // Read user from Redis
@@ -117,52 +99,50 @@ async fn handle_create_order(
     let mut user_json = match user_json {
         Some(v) => v,
         None => {
-            return (
-                StatusCode::NOT_FOUND,
-                error_json("user not found in cache"),
-            )
-                .into_response()
+            return HttpResponse::NotFound().json(ErrorBody {
+                error: "user not found in cache",
+            })
         }
     };
 
     let user: User = match unsafe { simd_json::from_str(&mut user_json) } {
         Ok(u) => u,
         Err(_) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                error_json("failed to parse user data"),
-            )
-                .into_response()
+            return HttpResponse::InternalServerError().json(ErrorBody {
+                error: "failed to parse user data",
+            })
         }
     };
 
-    // Get a Postgres connection from the pool
+    // Get Postgres connection
     let pg = match state.pg.get().await {
         Ok(c) => c,
         Err(_) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                error_json("database unavailable"),
-            )
-                .into_response()
+            return HttpResponse::InternalServerError().json(ErrorBody {
+                error: "database unavailable",
+            })
         }
     };
 
-    // Read product (with cached prepared statement)
+    // Read product
     let stmt = pg
         .prepare_cached("SELECT id, name, price::float8 FROM products WHERE id = $1")
         .await
         .unwrap();
     let product_row = match pg.query_opt(&stmt, &[&req.product_id]).await {
         Ok(Some(row)) => row,
-        _ => return (StatusCode::NOT_FOUND, error_json("product not found")).into_response(),
+        _ => {
+            return HttpResponse::NotFound().json(ErrorBody {
+                error: "product not found",
+            })
+        }
     };
 
     let product_name: &str = product_row.get(1);
     let price: f64 = product_row.get(2);
     let total = price * req.quantity as f64;
 
-    // Insert order (with cached prepared statement)
+    // Insert order
     let stmt = pg
         .prepare_cached(
             "INSERT INTO orders (user_id, product_id, quantity, total, created_at) \
@@ -176,11 +156,9 @@ async fn handle_create_order(
     {
         Ok(row) => row,
         Err(_) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                error_json("failed to create order"),
-            )
-                .into_response()
+            return HttpResponse::InternalServerError().json(ErrorBody {
+                error: "failed to create order",
+            })
         }
     };
 
@@ -190,27 +168,28 @@ async fn handle_create_order(
     // Invalidate cache
     let _: Result<i32, _> = redis.del(redis_key("order_cache:", req.user_id)).await;
 
-    let resp = OrderResponse {
+    HttpResponse::Created().json(OrderResponse {
         order_id,
         user_name: user.name,
         product_name: product_name.to_owned(),
         quantity: req.quantity,
         total,
         created_at: created_at.to_rfc3339(),
-    };
-
-    (StatusCode::CREATED, Json(resp)).into_response()
+    })
 }
 
-async fn handle_get_order(State(state): State<AppState>, Path(id): Path<i32>) -> Response {
+async fn handle_get_order(
+    state: web::Data<AppState>,
+    path: web::Path<i32>,
+) -> HttpResponse {
+    let id = path.into_inner();
+
     let pg = match state.pg.get().await {
         Ok(c) => c,
         Err(_) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                error_json("database unavailable"),
-            )
-                .into_response()
+            return HttpResponse::InternalServerError().json(ErrorBody {
+                error: "database unavailable",
+            })
         }
     };
 
@@ -223,7 +202,11 @@ async fn handle_get_order(State(state): State<AppState>, Path(id): Path<i32>) ->
         .unwrap();
     let row = match pg.query_opt(&stmt, &[&id]).await {
         Ok(Some(row)) => row,
-        _ => return (StatusCode::NOT_FOUND, error_json("order not found")).into_response(),
+        _ => {
+            return HttpResponse::NotFound().json(ErrorBody {
+                error: "order not found",
+            })
+        }
     };
 
     let user_id: i32 = row.get(1);
@@ -244,7 +227,7 @@ async fn handle_get_order(State(state): State<AppState>, Path(id): Path<i32>) ->
         }
     }
 
-    // Enrich with product name from Postgres
+    // Enrich with product name
     let mut product_name = String::new();
     let stmt = pg
         .prepare_cached("SELECT name FROM products WHERE id = $1")
@@ -254,38 +237,40 @@ async fn handle_get_order(State(state): State<AppState>, Path(id): Path<i32>) ->
         product_name = row.get::<_, &str>(0).to_owned();
     }
 
-    let resp = OrderResponse {
+    HttpResponse::Ok().json(OrderResponse {
         order_id: id,
         user_name,
         product_name,
         quantity,
         total,
         created_at: created_at.to_rfc3339(),
-    };
-
-    Json(resp).into_response()
+    })
 }
 
 async fn handle_list_orders(
-    State(state): State<AppState>,
-    Query(params): Query<ListOrdersQuery>,
-) -> Response {
-    let user_id_str = match params.user_id {
+    state: web::Data<AppState>,
+    query: web::Query<ListOrdersQuery>,
+) -> HttpResponse {
+    let user_id_str = match query.user_id {
         Some(ref s) if !s.is_empty() => s.clone(),
         _ => {
-            return (StatusCode::BAD_REQUEST, error_json("user_id is required")).into_response()
+            return HttpResponse::BadRequest().json(ErrorBody {
+                error: "user_id is required",
+            })
         }
     };
 
     let user_id: i32 = match user_id_str.parse() {
         Ok(id) => id,
         Err(_) => {
-            return (StatusCode::BAD_REQUEST, error_json("invalid user_id")).into_response()
+            return HttpResponse::BadRequest().json(ErrorBody {
+                error: "invalid user_id",
+            })
         }
     };
 
     let mut limit: i64 = 20;
-    if let Some(ref l) = params.limit {
+    if let Some(ref l) = query.limit {
         if let Ok(parsed) = l.parse::<i64>() {
             if parsed > 0 && parsed <= 100 {
                 limit = parsed;
@@ -294,7 +279,7 @@ async fn handle_list_orders(
     }
 
     let mut offset: i64 = 0;
-    if let Some(ref o) = params.offset {
+    if let Some(ref o) = query.offset {
         if let Ok(parsed) = o.parse::<i64>() {
             if parsed >= 0 {
                 offset = parsed;
@@ -317,11 +302,9 @@ async fn handle_list_orders(
     let pg = match state.pg.get().await {
         Ok(c) => c,
         Err(_) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                error_json("query failed"),
-            )
-                .into_response()
+            return HttpResponse::InternalServerError().json(ErrorBody {
+                error: "query failed",
+            })
         }
     };
 
@@ -336,11 +319,9 @@ async fn handle_list_orders(
     let rows = match pg.query(&stmt, &[&user_id, &limit, &offset]).await {
         Ok(rows) => rows,
         Err(_) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                error_json("query failed"),
-            )
-                .into_response()
+            return HttpResponse::InternalServerError().json(ErrorBody {
+                error: "query failed",
+            })
         }
     };
 
@@ -364,10 +345,11 @@ async fn handle_list_orders(
         .collect();
 
     let count = orders.len();
-    Json(OrderListResponse { orders, count }).into_response()
+    HttpResponse::Ok().json(OrderListResponse { orders, count })
 }
 
-async fn run() {
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
     let port: u16 = env::var("HTTP_PORT")
         .ok()
         .and_then(|s| s.parse().ok())
@@ -376,6 +358,10 @@ async fn run() {
         .unwrap_or_else(|_| "postgres://bench:bench@localhost:5432/bench".to_string());
     let redis_url =
         env::var("REDIS_URL").unwrap_or_else(|_| "redis://localhost:6379".to_string());
+    let workers: usize = env::var("WORKER_THREADS")
+        .ok()
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(1);
 
     // Postgres via deadpool + tokio-postgres
     let pg_config: tokio_postgres::Config = postgres_url.parse().expect("invalid postgres url");
@@ -392,80 +378,23 @@ async fn run() {
         .await
         .expect("unable to connect to redis");
 
-    let state = AppState {
+    let state = web::Data::new(AppState {
         pg,
         redis: redis_conn,
-    };
-
-    let app = Router::new()
-        .route("/health", get(handle_health))
-        .route("/orders", get(handle_list_orders).post(handle_create_order))
-        .route("/orders/{id}", get(handle_get_order))
-        .with_state(state);
-
-    // Create listener with TCP_NODELAY
-    let addr = SocketAddr::from(([0, 0, 0, 0], port));
-    let socket = socket2::Socket::new(
-        socket2::Domain::IPV4,
-        socket2::Type::STREAM,
-        Some(socket2::Protocol::TCP),
-    )
-    .expect("unable to create socket");
-    socket.set_reuse_address(true).unwrap();
-    socket.set_nodelay(true).unwrap();
-    socket.bind(&addr.into()).expect("unable to bind");
-    socket.listen(1024).expect("unable to listen");
-    socket.set_nonblocking(true).unwrap();
-    let listener = TcpListener::from_std(std::net::TcpListener::from(socket))
-        .expect("unable to wrap listener");
+    });
 
     println!("listening on :{}", port);
 
-    axum::serve(listener, app)
-        .with_graceful_shutdown(shutdown_signal())
-        .await
-        .expect("server error");
-
-    println!("server stopped");
-}
-
-async fn shutdown_signal() {
-    let ctrl_c = async {
-        signal::ctrl_c()
-            .await
-            .expect("failed to install Ctrl+C handler");
-    };
-
-    #[cfg(unix)]
-    let terminate = async {
-        signal::unix::signal(signal::unix::SignalKind::terminate())
-            .expect("failed to install signal handler")
-            .recv()
-            .await;
-    };
-
-    #[cfg(not(unix))]
-    let terminate = std::future::pending::<()>();
-
-    tokio::select! {
-        _ = ctrl_c => {},
-        _ = terminate => {},
-    }
-
-    println!("shutting down...");
-}
-
-fn main() {
-    let workers: usize = env::var("WORKER_THREADS")
-        .ok()
-        .and_then(|s| s.parse().ok())
-        .unwrap_or(1);
-
-    tokio::runtime::Builder::new_multi_thread()
-        .worker_threads(workers)
-        .enable_io()
-        .enable_time()
-        .build()
-        .unwrap()
-        .block_on(run());
+    HttpServer::new(move || {
+        App::new()
+            .app_data(state.clone())
+            .route("/health", web::get().to(handle_health))
+            .route("/orders", web::post().to(handle_create_order))
+            .route("/orders", web::get().to(handle_list_orders))
+            .route("/orders/{id}", web::get().to(handle_get_order))
+    })
+    .workers(workers)
+    .bind(("0.0.0.0", port))?
+    .run()
+    .await
 }

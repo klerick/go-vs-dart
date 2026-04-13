@@ -25,13 +25,14 @@ declare -A ALL_SERVICES=(
   [deno-service]=8086
   [dotnet-service]=8087
   [nestjs-service]=8088
+  [actix-service]=8089
 )
 
 # Build target list
 if [ $# -gt 0 ]; then
   TARGETS=("$@")
 else
-  TARGETS=(go-service dart-service axum-service node-service bun-service deno-service dotnet-service nestjs-service)
+  TARGETS=(go-service dart-service axum-service node-service bun-service deno-service dotnet-service nestjs-service actix-service)
 fi
 
 mkdir -p "$RESULTS_DIR"
