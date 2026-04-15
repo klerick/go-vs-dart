@@ -1,8 +1,9 @@
 use actix_web::{web, App, HttpResponse, HttpServer};
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Datelike, Timelike, Utc};
 use deadpool_postgres::Pool;
 use deadpool_redis::redis::{aio::MultiplexedConnection, AsyncCommands};
-use serde::{Deserialize, Serialize};
+use simd_json_derive::Deserialize as SimdDeserialize;
+use simd_json_derive::Serialize as SimdSerialize;
 use std::env;
 use std::fmt::Write;
 use tokio_postgres::NoTls;
@@ -16,21 +17,23 @@ struct AppState {
     redis: MultiplexedConnection,
 }
 
-#[derive(Deserialize)]
+#[derive(simd_json_derive::Deserialize)]
 struct OrderRequest {
     user_id: i32,
     product_id: i32,
     quantity: i32,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(simd_json_derive::Deserialize)]
 struct User {
+    #[allow(dead_code)]
     id: i32,
     name: String,
+    #[allow(dead_code)]
     email: String,
 }
 
-#[derive(Serialize)]
+#[derive(simd_json_derive::Serialize)]
 struct OrderResponse {
     order_id: i32,
     user_name: String,
@@ -40,27 +43,45 @@ struct OrderResponse {
     created_at: String,
 }
 
-#[derive(Serialize)]
+#[derive(simd_json_derive::Serialize)]
 struct OrderListResponse {
     orders: Vec<OrderResponse>,
     count: usize,
 }
 
-#[derive(Serialize)]
+#[derive(simd_json_derive::Serialize)]
 struct ErrorBody<'a> {
     error: &'a str,
 }
 
-#[derive(Serialize)]
+#[derive(simd_json_derive::Serialize)]
 struct HealthBody {
     status: &'static str,
 }
 
-#[derive(Deserialize)]
+#[derive(serde::Deserialize)]
 struct ListOrdersQuery {
     user_id: Option<String>,
     limit: Option<String>,
     offset: Option<String>,
+}
+
+fn json_ok<T: SimdSerialize>(body: &T) -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type("application/json")
+        .body(body.json_vec().unwrap())
+}
+
+fn json_created<T: SimdSerialize>(body: &T) -> HttpResponse {
+    HttpResponse::Created()
+        .content_type("application/json")
+        .body(body.json_vec().unwrap())
+}
+
+fn json_err(status: actix_web::http::StatusCode, msg: &str) -> HttpResponse {
+    HttpResponse::build(status)
+        .content_type("application/json")
+        .body(ErrorBody { error: msg }.json_vec().unwrap())
 }
 
 fn redis_key(prefix: &str, id: i32) -> String {
@@ -78,71 +99,94 @@ async fn rdel(conn: &MultiplexedConnection, key: String) {
     let _: Result<i32, _> = conn.clone().del(key).await;
 }
 
+fn fmt_ts(dt: DateTime<Utc>) -> String {
+    let mut buf = String::with_capacity(25);
+    let _ = write!(
+        buf,
+        "{:04}-{:02}-{:02}T{:02}:{:02}:{:02}+00:00",
+        dt.year(),
+        dt.month(),
+        dt.day(),
+        dt.hour(),
+        dt.minute(),
+        dt.second()
+    );
+    buf
+}
+
 async fn handle_health() -> HttpResponse {
-    HttpResponse::Ok().json(HealthBody { status: "ok" })
+    json_ok(&HealthBody { status: "ok" })
 }
 
 async fn handle_create_order(
     state: web::Data<AppState>,
     body: web::Bytes,
 ) -> HttpResponse {
-    let req: OrderRequest = match serde_json::from_slice(&body) {
+    use actix_web::http::StatusCode;
+
+    let mut body_buf = body.to_vec();
+    let req: OrderRequest = match OrderRequest::from_slice(&mut body_buf) {
         Ok(r) => r,
-        Err(_) => return HttpResponse::BadRequest().json(ErrorBody { error: "invalid json body" }),
+        Err(_) => return json_err(StatusCode::BAD_REQUEST, "invalid json body"),
     };
 
     if req.user_id == 0 || req.product_id == 0 || req.quantity <= 0 {
-        return HttpResponse::BadRequest().json(ErrorBody {
-            error: "user_id, product_id required and quantity must be > 0",
-        });
+        return json_err(
+            StatusCode::BAD_REQUEST,
+            "user_id, product_id required and quantity must be > 0",
+        );
     }
 
-    // Read user from Redis
-    let mut user_json = match rget(&state.redis, redis_key("user:", req.user_id)).await {
-        Some(v) => v,
-        None => {
-            return HttpResponse::NotFound().json(ErrorBody {
-                error: "user not found in cache",
-            })
+    // Concurrent: Redis user lookup + Postgres product lookup
+    let product_id = req.product_id;
+    let (user_res, product_res) = tokio::join!(
+        rget(&state.redis, redis_key("user:", req.user_id)),
+        async {
+            let pg = match state.pg.get().await {
+                Ok(c) => c,
+                Err(_) => return Err("database unavailable"),
+            };
+            let stmt = pg
+                .prepare_cached("SELECT name, price::float8 FROM products WHERE id = $1")
+                .await
+                .unwrap();
+            match pg.query_opt(&stmt, &[&product_id]).await {
+                Ok(Some(row)) => {
+                    let name: String = row.get::<_, &str>(0).to_owned();
+                    let price: f64 = row.get(1);
+                    Ok((name, price))
+                }
+                _ => Err("product not found"),
+            }
         }
+    );
+
+    let mut user_json = match user_res {
+        Some(v) => v,
+        None => return json_err(StatusCode::NOT_FOUND, "user not found in cache"),
     };
 
-    let user: User = match unsafe { simd_json::from_str(&mut user_json) } {
+    let user: User = match unsafe { User::from_str(&mut user_json) } {
         Ok(u) => u,
         Err(_) => {
-            return HttpResponse::InternalServerError().json(ErrorBody {
-                error: "failed to parse user data",
-            })
+            return json_err(
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "failed to parse user data",
+            )
         }
     };
 
-    // Read product — checkout pg, query, return to pool
-    let (product_name, price) = {
-        let pg = match state.pg.get().await {
-            Ok(c) => c,
-            Err(_) => {
-                return HttpResponse::InternalServerError().json(ErrorBody {
-                    error: "database unavailable",
-                })
-            }
-        };
-        let stmt = pg
-            .prepare_cached("SELECT name, price::float8 FROM products WHERE id = $1")
-            .await
-            .unwrap();
-        match pg.query_opt(&stmt, &[&req.product_id]).await {
-            Ok(Some(row)) => {
-                let name: String = row.get::<_, &str>(0).to_owned();
-                let price: f64 = row.get(1);
-                (name, price)
-            }
-            _ => {
-                return HttpResponse::NotFound().json(ErrorBody {
-                    error: "product not found",
-                })
-            }
+    let (product_name, price) = match product_res {
+        Ok(v) => v,
+        Err(e) => {
+            let status = if e == "database unavailable" {
+                StatusCode::INTERNAL_SERVER_ERROR
+            } else {
+                StatusCode::NOT_FOUND
+            };
+            return json_err(status, e);
         }
-    }; // pg returned to pool
+    };
 
     let total = price * req.quantity as f64;
 
@@ -151,9 +195,7 @@ async fn handle_create_order(
         let pg = match state.pg.get().await {
             Ok(c) => c,
             Err(_) => {
-                return HttpResponse::InternalServerError().json(ErrorBody {
-                    error: "failed to create order",
-                })
+                return json_err(StatusCode::INTERNAL_SERVER_ERROR, "failed to create order")
             }
         };
         let stmt = pg
@@ -173,9 +215,7 @@ async fn handle_create_order(
                 (oid, ca)
             }
             Err(_) => {
-                return HttpResponse::InternalServerError().json(ErrorBody {
-                    error: "failed to create order",
-                })
+                return json_err(StatusCode::INTERNAL_SERVER_ERROR, "failed to create order")
             }
         }
     }; // pg returned to pool
@@ -183,13 +223,13 @@ async fn handle_create_order(
     // Invalidate cache
     rdel(&state.redis, redis_key("order_cache:", req.user_id)).await;
 
-    HttpResponse::Created().json(OrderResponse {
+    json_created(&OrderResponse {
         order_id,
         user_name: user.name,
         product_name,
         quantity: req.quantity,
         total,
-        created_at: created_at.to_rfc3339(),
+        created_at: fmt_ts(created_at),
     })
 }
 
@@ -197,6 +237,8 @@ async fn handle_get_order(
     state: web::Data<AppState>,
     path: web::Path<i32>,
 ) -> HttpResponse {
+    use actix_web::http::StatusCode;
+
     let id = path.into_inner();
 
     // Query order — checkout pg, query, return to pool
@@ -204,9 +246,7 @@ async fn handle_get_order(
         let pg = match state.pg.get().await {
             Ok(c) => c,
             Err(_) => {
-                return HttpResponse::InternalServerError().json(ErrorBody {
-                    error: "database unavailable",
-                })
+                return json_err(StatusCode::INTERNAL_SERVER_ERROR, "database unavailable")
             }
         };
         let stmt = pg
@@ -225,49 +265,51 @@ async fn handle_get_order(
                 let ca: DateTime<Utc> = row.get(4);
                 (uid, pid, qty, tot, ca)
             }
-            _ => {
-                return HttpResponse::NotFound().json(ErrorBody {
-                    error: "order not found",
-                })
-            }
+            _ => return json_err(StatusCode::NOT_FOUND, "order not found"),
         }
     }; // pg returned to pool
 
-    // Enrich with user name from Redis
-    let mut user_name = String::new();
-    if let Some(mut user_json) = rget(&state.redis, redis_key("user:", user_id)).await {
-        if let Ok(user) = unsafe { simd_json::from_str::<User>(&mut user_json) } {
-            user_name = user.name;
-        }
-    }
-
-    // Enrich with product name — checkout pg, query, return to pool
-    let mut product_name = String::new();
-    {
-        let pg = match state.pg.get().await {
-            Ok(c) => c,
-            Err(_) => {
-                return HttpResponse::InternalServerError().json(ErrorBody {
-                    error: "database unavailable",
-                })
+    // Concurrent: Redis user enrichment + Postgres product enrichment
+    let (user_name, product_res) = tokio::join!(
+        async {
+            if let Some(mut user_json) = rget(&state.redis, redis_key("user:", user_id)).await {
+                if let Ok(user) = unsafe { User::from_str(&mut user_json) } {
+                    return user.name;
+                }
             }
-        };
-        let stmt = pg
-            .prepare_cached("SELECT name FROM products WHERE id = $1")
-            .await
-            .unwrap();
-        if let Ok(Some(row)) = pg.query_opt(&stmt, &[&product_id]).await {
-            product_name = row.get::<_, &str>(0).to_owned();
+            String::new()
+        },
+        async {
+            let pg = match state.pg.get().await {
+                Ok(c) => c,
+                Err(_) => return Err("database unavailable"),
+            };
+            let stmt = pg
+                .prepare_cached("SELECT name FROM products WHERE id = $1")
+                .await
+                .unwrap();
+            let mut name = String::new();
+            if let Ok(Some(row)) = pg.query_opt(&stmt, &[&product_id]).await {
+                name = row.get::<_, &str>(0).to_owned();
+            }
+            Ok(name)
         }
-    } // pg returned to pool
+    );
 
-    HttpResponse::Ok().json(OrderResponse {
+    let product_name = match product_res {
+        Ok(name) => name,
+        Err(e) => {
+            return json_err(StatusCode::INTERNAL_SERVER_ERROR, e)
+        }
+    };
+
+    json_ok(&OrderResponse {
         order_id: id,
         user_name,
         product_name,
         quantity,
         total,
-        created_at: created_at.to_rfc3339(),
+        created_at: fmt_ts(created_at),
     })
 }
 
@@ -275,22 +317,16 @@ async fn handle_list_orders(
     state: web::Data<AppState>,
     query: web::Query<ListOrdersQuery>,
 ) -> HttpResponse {
+    use actix_web::http::StatusCode;
+
     let user_id_str = match query.user_id {
         Some(ref s) if !s.is_empty() => s.clone(),
-        _ => {
-            return HttpResponse::BadRequest().json(ErrorBody {
-                error: "user_id is required",
-            })
-        }
+        _ => return json_err(StatusCode::BAD_REQUEST, "user_id is required"),
     };
 
     let user_id: i32 = match user_id_str.parse() {
         Ok(id) => id,
-        Err(_) => {
-            return HttpResponse::BadRequest().json(ErrorBody {
-                error: "invalid user_id",
-            })
-        }
+        Err(_) => return json_err(StatusCode::BAD_REQUEST, "invalid user_id"),
     };
 
     let mut limit: i64 = 20;
@@ -311,41 +347,39 @@ async fn handle_list_orders(
         }
     }
 
-    // Get user name from Redis
-    let mut user_name = String::new();
-    if let Some(mut user_json) = rget(&state.redis, redis_key("user:", user_id)).await {
-        if let Ok(user) = unsafe { simd_json::from_str::<User>(&mut user_json) } {
-            user_name = user.name;
+    // Concurrent: Redis user lookup + Postgres orders query
+    let (user_name, rows_res) = tokio::join!(
+        async {
+            if let Some(mut user_json) = rget(&state.redis, redis_key("user:", user_id)).await {
+                if let Ok(user) = unsafe { User::from_str(&mut user_json) } {
+                    return user.name;
+                }
+            }
+            String::new()
+        },
+        async {
+            let pg = match state.pg.get().await {
+                Ok(c) => c,
+                Err(_) => return Err("query failed"),
+            };
+            let stmt = pg
+                .prepare_cached(
+                    "SELECT o.id, o.product_id, o.quantity, o.total::float8, o.created_at, p.name \
+                     FROM orders o JOIN products p ON p.id = o.product_id \
+                     WHERE o.user_id = $1 ORDER BY o.created_at DESC LIMIT $2 OFFSET $3",
+                )
+                .await
+                .unwrap();
+            pg.query(&stmt, &[&user_id, &limit, &offset])
+                .await
+                .map_err(|_| "query failed")
         }
-    }
+    );
 
-    // Query orders — checkout pg, query, return to pool
-    let rows = {
-        let pg = match state.pg.get().await {
-            Ok(c) => c,
-            Err(_) => {
-                return HttpResponse::InternalServerError().json(ErrorBody {
-                    error: "query failed",
-                })
-            }
-        };
-        let stmt = pg
-            .prepare_cached(
-                "SELECT o.id, o.product_id, o.quantity, o.total::float8, o.created_at, p.name \
-                 FROM orders o JOIN products p ON p.id = o.product_id \
-                 WHERE o.user_id = $1 ORDER BY o.created_at DESC LIMIT $2 OFFSET $3",
-            )
-            .await
-            .unwrap();
-        match pg.query(&stmt, &[&user_id, &limit, &offset]).await {
-            Ok(rows) => rows,
-            Err(_) => {
-                return HttpResponse::InternalServerError().json(ErrorBody {
-                    error: "query failed",
-                })
-            }
-        }
-    }; // pg returned to pool
+    let rows: Vec<tokio_postgres::Row> = match rows_res {
+        Ok(r) => r,
+        Err(e) => return json_err(StatusCode::INTERNAL_SERVER_ERROR, e),
+    };
 
     let orders: Vec<OrderResponse> = rows
         .iter()
@@ -361,13 +395,13 @@ async fn handle_list_orders(
                 product_name: pname.to_owned(),
                 quantity: qty,
                 total: tot,
-                created_at: ca.to_rfc3339(),
+                created_at: fmt_ts(ca),
             }
         })
         .collect();
 
     let count = orders.len();
-    HttpResponse::Ok().json(OrderListResponse { orders, count })
+    json_ok(&OrderListResponse { orders, count })
 }
 
 #[actix_web::main]
