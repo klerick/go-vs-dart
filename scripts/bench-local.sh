@@ -42,6 +42,23 @@ echo "service,vus,rps,avg_ms,p95_ms,p99_ms,max_ms,fail_pct" > "$SUMMARY"
 
 log() { echo "[$(date '+%H:%M:%S')] $*"; }
 
+reset_data() {
+  log "  Resetting orders table..."
+  docker compose exec -T postgres psql -U bench -d bench -c "
+    TRUNCATE orders RESTART IDENTITY;
+    INSERT INTO orders (user_id, product_id, quantity, total, created_at)
+    SELECT
+      (random() * 99 + 1)::int,
+      (random() * 99 + 1)::int,
+      (random() * 4 + 1)::int,
+      (random() * 500 + 1)::numeric(10,2),
+      NOW() - (random() * interval '90 days')
+    FROM generate_series(1, 100000);
+    ANALYZE orders;
+  " > /dev/null 2>&1
+  log "  Data reset complete"
+}
+
 run_bench() {
   local svc="$1" port="$2" vus="$3"
   local base_url="http://localhost:$port"
@@ -94,6 +111,17 @@ for svc in "${TARGETS[@]}"; do
 
   log ""
   log "── $svc (localhost:$port) ──"
+
+  # Stop all app services, start only the one under test
+  log "  Isolating $svc..."
+  for other in "${!ALL_SERVICES[@]}"; do
+    docker compose stop "$other" > /dev/null 2>&1 || true
+  done
+  docker compose up -d "$svc" > /dev/null 2>&1
+  sleep 3
+
+  reset_data
+  sleep 3
   run_bench "$svc" "$port" "$VUS"
 done
 
