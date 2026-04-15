@@ -550,13 +550,7 @@ async fn shutdown_signal() {
 }
 
 fn main() {
-    let workers: usize = env::var("WORKER_THREADS")
-        .ok()
-        .and_then(|s| s.parse().ok())
-        .unwrap_or(1);
-
-    tokio::runtime::Builder::new_multi_thread()
-        .worker_threads(workers)
+    tokio::runtime::Builder::new_current_thread()
         .enable_io()
         .enable_time()
         .build()

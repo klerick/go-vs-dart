@@ -404,57 +404,60 @@ async fn handle_list_orders(
     json_ok(&OrderListResponse { orders, count })
 }
 
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    let port: u16 = env::var("HTTP_PORT")
-        .ok()
-        .and_then(|s| s.parse().ok())
-        .unwrap_or(8080);
-    let postgres_url = env::var("POSTGRES_URL")
-        .unwrap_or_else(|_| "postgres://bench:bench@localhost:5432/bench".to_string());
-    let redis_url =
-        env::var("REDIS_URL").unwrap_or_else(|_| "redis://localhost:6379".to_string());
-    let workers: usize = env::var("WORKER_THREADS")
-        .ok()
-        .and_then(|s| s.parse().ok())
-        .unwrap_or(1);
-
-    // Postgres via deadpool + tokio-postgres (pool matches Go's pgxpool: max(4, num_cpus))
-    let pg_pool_size = std::cmp::max(4, num_cpus::get());
-    let pg_config: tokio_postgres::Config = postgres_url.parse().expect("invalid postgres url");
-    let mgr = deadpool_postgres::Manager::new(pg_config, NoTls);
-    let pg = Pool::builder(mgr)
-        .max_size(pg_pool_size)
+fn main() -> std::io::Result<()> {
+    tokio::runtime::Builder::new_current_thread()
+        .enable_io()
+        .enable_time()
         .build()
-        .expect("unable to create postgres pool");
+        .unwrap()
+        .block_on(async {
+            let port: u16 = env::var("HTTP_PORT")
+                .ok()
+                .and_then(|s| s.parse().ok())
+                .unwrap_or(8080);
+            let postgres_url = env::var("POSTGRES_URL")
+                .unwrap_or_else(|_| "postgres://bench:bench@localhost:5432/bench".to_string());
+            let redis_url =
+                env::var("REDIS_URL").unwrap_or_else(|_| "redis://localhost:6379".to_string());
 
-    // Redis via deadpool — take the underlying MultiplexedConnection, clone per handler
-    let redis_cfg = deadpool_redis::Config::from_url(&redis_url);
-    let redis_pool = redis_cfg
-        .builder()
-        .expect("invalid redis config")
-        .max_size(1)
-        .build()
-        .expect("unable to create redis pool");
-    let redis_conn = deadpool_redis::Connection::take(redis_pool.get().await.unwrap());
+            // Postgres via deadpool + tokio-postgres (pool matches Go's pgxpool: max(4, num_cpus))
+            let pg_pool_size = std::cmp::max(4, num_cpus::get());
+            let pg_config: tokio_postgres::Config =
+                postgres_url.parse().expect("invalid postgres url");
+            let mgr = deadpool_postgres::Manager::new(pg_config, NoTls);
+            let pg = Pool::builder(mgr)
+                .max_size(pg_pool_size)
+                .build()
+                .expect("unable to create postgres pool");
 
-    let state = web::Data::new(AppState {
-        pg,
-        redis: redis_conn,
-    });
+            // Redis via deadpool — take the underlying MultiplexedConnection, clone per handler
+            let redis_cfg = deadpool_redis::Config::from_url(&redis_url);
+            let redis_pool = redis_cfg
+                .builder()
+                .expect("invalid redis config")
+                .max_size(1)
+                .build()
+                .expect("unable to create redis pool");
+            let redis_conn = deadpool_redis::Connection::take(redis_pool.get().await.unwrap());
 
-    println!("listening on :{}", port);
+            let state = web::Data::new(AppState {
+                pg,
+                redis: redis_conn,
+            });
 
-    HttpServer::new(move || {
-        App::new()
-            .app_data(state.clone())
-            .route("/health", web::get().to(handle_health))
-            .route("/orders", web::post().to(handle_create_order))
-            .route("/orders", web::get().to(handle_list_orders))
-            .route("/orders/{id}", web::get().to(handle_get_order))
-    })
-    .workers(workers)
-    .bind(("0.0.0.0", port))?
-    .run()
-    .await
+            println!("listening on :{}", port);
+
+            HttpServer::new(move || {
+                App::new()
+                    .app_data(state.clone())
+                    .route("/health", web::get().to(handle_health))
+                    .route("/orders", web::post().to(handle_create_order))
+                    .route("/orders", web::get().to(handle_list_orders))
+                    .route("/orders/{id}", web::get().to(handle_get_order))
+            })
+            .workers(1)
+            .bind(("0.0.0.0", port))?
+            .run()
+            .await
+        })
 }
