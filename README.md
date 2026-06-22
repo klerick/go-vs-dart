@@ -2,6 +2,8 @@
 
 > **Disclaimer**: This repo started as "Go vs Dart" because the original hypothesis was that Dart could be a viable backend runtime — at minimum offering memory savings over Node.js while sharing language with Flutter frontends. Reality hit hard. What began as a two-language comparison turned into a six-runtime benchmark when Dart lost to everything. The name stays as a reminder that expectations should be validated with data, not blog posts.
 
+> 📝 **The full story behind these numbers:** [Dart Looked Like a Killer on the Backend. On a Leash, It's a Paper Tiger.](https://dev.to/klerick/dart-on-the-backend-the-illusion-of-cloud-ready-performance-16o2) — the write-up on dev.to.
+
 ## What's inside
 
 Identical HTTP API service implemented in 6 runtimes + NestJS framework overhead test:
